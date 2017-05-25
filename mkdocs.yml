@@ -1,0 +1,28 @@
+site_name: Container Camp Sydney 2017
+
+theme: readthedocs
+
+markdown_extensions:
+    - toc:
+        permalink: []
+    - admonition:
+
+pages:
+- Home: 'index.md'
+- Workshops:
+    - Docker Orchestration: 'day-00-workshops/docker-orchestration-workshop.md'
+    - Brandan Burns Q&A: 'day-00-workshops/brendan-burns-kubernetes-q&a.md'
+- Day 1:
+    - Container Journey Past, Present, and Future: 'day-01/brendan-burns-container-past-future.md'
+    - Kubernetes meets Linux: 'day-01/kubernetes-meets-linux.md'
+    - Containers from scratch - the sequel: 'day-01/containers-from-scratch-the sequel.md'
+    - Kubernetes and the rise of Serverless: 'day-01/kubernetes-rise-serverless.md'
+    - OCI and Open Container Standards: 'day-01/oci.md'
+- Day 2:    
+    - Orchestrating Least Privilege: 'day-02/orchestrating-least-privilege.md'
+    - If It's In a Container It's Secure Right?: 'day-02/docker-container-secure-right.md'
+    - Distributed Command Execution using Containers and Cog: 'day-02/distributed-command-cog.md'
+    - Mixing cgroupfs v1 and cgroupfs v2 - finding solutions for container runtimes: 'day-02/mixing-cgroups-1-2.md'
+    - Rootless Containers with runC: 'day-02/rootless-containers-runc.md'
+    - Kubernetes and the Next Generation Data Centre: 'day-02/kubernetes-next-gen-data-centre.md'
+- Cool Links: 'cool-links.md'
