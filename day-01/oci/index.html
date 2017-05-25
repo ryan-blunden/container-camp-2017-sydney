@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>OCI and Open Container Standards - Container Camp Sydney 2017</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "OCI and Open Container Standards";
+    var mkdocs_page_input_path = "day-01/oci.md";
+    var mkdocs_page_url = "/day-01/oci/";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js"></script>
+  <script src="../../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> Container Camp Sydney 2017</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Workshops</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../day-00-workshops/docker-orchestration-workshop/">Docker Orchestration</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../day-00-workshops/brendan-burns-kubernetes-q&a/">Brandan Burns Q&A</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Day 1</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../brendan-burns-container-past-future/">Container Journey Past, Present, and Future</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../kubernetes-meets-linux/">Kubernetes meets Linux</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../containers-from-scratch-the sequel/">Containers from scratch - the sequel</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../kubernetes-rise-serverless/">Kubernetes and the rise of Serverless</a>
+                </li>
+                <li class=" current">
+                    
+    <a class="current" href="./">OCI and Open Container Standards</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#oci-and-open-container-standards">OCI and Open Container Standards</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#what-is-oci">What is OCI?</a></li>
+        
+            <li><a class="toctree-l4" href="#what-doesnt-hold-true-about-the-shipping-container-metaphor">What doesn't hold true about the shipping container metaphor?</a></li>
+        
+            <li><a class="toctree-l4" href="#the-quest-for-a-better-metaphor">The quest for a better metaphor</a></li>
+        
+            <li><a class="toctree-l4" href="#i-really-appreciate-the-focus-on-improving-the-metaphor">I really appreciate the focus on improving the metaphor</a></li>
+        
+            <li><a class="toctree-l4" href="#oci-image-format">OCI Image format</a></li>
+        
+        </ul>
+    
+
+    </ul>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Day 2</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../day-02/orchestrating-least-privilege/">Orchestrating Least Privilege</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../day-02/docker-container-secure-right/">If It's In a Container It's Secure Right?</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../day-02/distributed-command-cog/">Distributed Command Execution using Containers and Cog</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../day-02/mixing-cgroups-1-2/">Mixing cgroupfs v1 and cgroupfs v2 - finding solutions for container runtimes</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../day-02/rootless-containers-runc/">Rootless Containers with runC</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../day-02/kubernetes-next-gen-data-centre/">Kubernetes and the Next Generation Data Centre</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../cool-links/">Cool Links</a>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">Container Camp Sydney 2017</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Day 1 &raquo;</li>
+        
+      
+    
+    <li>OCI and Open Container Standards</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="oci-and-open-container-standards">OCI and Open Container Standards</h1>
+<p>Jonathan Boulle</p>
+<p>NStack</p>
+<p>@baronboulle</p>
+<h2 id="what-is-oci">What is OCI?</h2>
+<p>Stands for Open Containers Initiative.</p>
+<p>Docker did a great job of holding the container commnity together during the last three years. Net result is the <a href="https://blog.docker.com/2017/04/introducing-the-moby-project/">Moby project</a> which provides open source container tools for everyone.</p>
+<p>Its just standards for container runtime and container image format (not the official definition).</p>
+<ul>
+<li><a href="https://github.com/opencontainers/image-spec">OCI Image spec</a></li>
+<li><a href="https://github.com/opencontainers/runtime-spec">OCI Runtime spec</a></li>
+</ul>
+<h2 id="what-doesnt-hold-true-about-the-shipping-container-metaphor">What doesn't hold true about the shipping container metaphor?</h2>
+<ul>
+<li>You actually <em>do</em> care whats inside it.</li>
+<li>You need to know about the contents of the container in order to use it.</li>
+</ul>
+<p>Perhaps we could help the metaphor along by adding a "shipping manifest"?</p>
+<p>But there are more problems:</p>
+<ul>
+<li>Shipping containers are fixed size (volume)</li>
+<li>Shipping containers are essenetially state machines:<ul>
+<li>built.</li>
+<li>empty.</li>
+<li>packed.</li>
+<li>shipped.</li>
+<li>un-packed.</li>
+</ul>
+</li>
+</ul>
+<p>Bottom line is that physical metaphors never map well to computing concepts.</p>
+<h2 id="the-quest-for-a-better-metaphor">The quest for a better metaphor</h2>
+<p>Chees-cake? No.</p>
+<p>IKEA furniture instrctions? Getting closer.</p>
+<p>Finally... Baron arrives at the Piola.</p>
+<p>While I agree that using the piola and music is a much more robust metaphor, the problem is that many people won't know what the piola is!</p>
+<p>If they don't, now they have to learn that first, hence it could be more of a barrier of entry to understanding what a <code>container</code> in software when using that as the metaphor.</p>
+<p>I think this might be one of those examples where "practicality beats purity" and although the shipping container metaphor is far from perfect and Baron's choice of the Piola is indeed <em>better</em>, it's may not be as effective.</p>
+<h2 id="i-really-appreciate-the-focus-on-improving-the-metaphor">I really appreciate the focus on improving the metaphor</h2>
+<p>This is one of the less sexy problems to try and take on and I really commend Baron for coming up with a much more air-tight metaphor for explaining containers.</p>
+<p>How we communicate concepts to people learning things for the first time is a really important thing to focus on.</p>
+<h2 id="oci-image-format">OCI Image format</h2>
+<p>Takes the Dockerfile v2.2 and aims to standardise from this point on:</p>
+<p>Anatomy:</p>
+<ul>
+<li>layers</li>
+<li>image index</li>
+<li>config</li>
+</ul>
+<p>On disklayout of the container:</p>
+<ul>
+<li>Extracted file system of the image on the host.</li>
+<li>State managemet: create, start, kill, delete, state.</li>
+<li>Encourage platform agnostic support.</li>
+</ul>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../../day-02/orchestrating-least-privilege/" class="btn btn-neutral float-right" title="Orchestrating Least Privilege">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../kubernetes-rise-serverless/" class="btn btn-neutral" title="Kubernetes and the rise of Serverless"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+    
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../kubernetes-rise-serverless/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../../day-02/orchestrating-least-privilege/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script src="../../js/theme.js"></script>
+
+</body>
+</html>

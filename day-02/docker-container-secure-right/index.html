@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>If It's In a Container It's Secure Right? - Container Camp Sydney 2017</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "If It's In a Container It's Secure Right?";
+    var mkdocs_page_input_path = "day-02/docker-container-secure-right.md";
+    var mkdocs_page_url = "/day-02/docker-container-secure-right/";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js"></script>
+  <script src="../../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> Container Camp Sydney 2017</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Workshops</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../day-00-workshops/docker-orchestration-workshop/">Docker Orchestration</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../day-00-workshops/brendan-burns-kubernetes-q&a/">Brandan Burns Q&A</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Day 1</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../day-01/brendan-burns-container-past-future/">Container Journey Past, Present, and Future</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../day-01/kubernetes-meets-linux/">Kubernetes meets Linux</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../day-01/containers-from-scratch-the sequel/">Containers from scratch - the sequel</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../day-01/kubernetes-rise-serverless/">Kubernetes and the rise of Serverless</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../day-01/oci/">OCI and Open Container Standards</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Day 2</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../orchestrating-least-privilege/">Orchestrating Least Privilege</a>
+                </li>
+                <li class=" current">
+                    
+    <a class="current" href="./">If It's In a Container It's Secure Right?</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#if-its-in-a-container-its-secure-right">If It's In a Container It's Secure Right?</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#how-is-container-security-different">How is container security different?</a></li>
+        
+            <li><a class="toctree-l4" href="#the-risks">The risks</a></li>
+        
+            <li><a class="toctree-l4" href="#protect-the-engine-and-runtime">Protect the engine and runtime</a></li>
+        
+            <li><a class="toctree-l4" href="#some-sane-defaults">Some sane defaults</a></li>
+        
+            <li><a class="toctree-l4" href="#how-to-add-security-to-docker">How to add security to Docker</a></li>
+        
+            <li><a class="toctree-l4" href="#demo">Demo</a></li>
+        
+            <li><a class="toctree-l4" href="#nist-container-security">Nist Container security</a></li>
+        
+            <li><a class="toctree-l4" href="#enter-linuxkit-a-way-to-build-container-specific-os">Enter LinuxKit - a way to build container specific OS.</a></li>
+        
+            <li><a class="toctree-l4" href="#how-is-it-different-to-a-traditional-os">How is it different to a traditional OS?</a></li>
+        
+            <li><a class="toctree-l4" href="#questions">Questions</a></li>
+        
+        </ul>
+    
+
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../distributed-command-cog/">Distributed Command Execution using Containers and Cog</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../mixing-cgroups-1-2/">Mixing cgroupfs v1 and cgroupfs v2 - finding solutions for container runtimes</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../rootless-containers-runc/">Rootless Containers with runC</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../kubernetes-next-gen-data-centre/">Kubernetes and the Next Generation Data Centre</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../cool-links/">Cool Links</a>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">Container Camp Sydney 2017</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Day 2 &raquo;</li>
+        
+      
+    
+    <li>If It's In a Container It's Secure Right?</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="if-its-in-a-container-its-secure-right">If It's In a Container It's Secure Right?</h1>
+<p>Many organsitions don't understand the risks that Docker presents because they think it's just like a hypervisor but more efficient.</p>
+<h2 id="how-is-container-security-different">How is container security different?</h2>
+<p>Traditional model = reactive, simply because it was often difficult to replicate production environments in development.</p>
+<p>But thanks to containers, we can take a proactive approach as everything out application needs to work is now available at build time (in our CI/CD system). Don't wait until it gets to prod!</p>
+<p><em>Old school</em>: Nessys, AV, HIDS.</p>
+<p><em>New school</em>: AppArmor, Clair, Notary.</p>
+<p>Old tools scan the VM/host, we also need tools to scan the container image.</p>
+<p>If a running container is just a process, we should be able to make that process act with least privilege thorugh something like App Armor.</p>
+<h2 id="the-risks">The risks</h2>
+<ul>
+<li>DoS the host.</li>
+<li>Fork bomb</li>
+<li>Kernel modification</li>
+<li>Privilege escalation.</li>
+</ul>
+<p>Make sure the kernal version your running is up-to-date and not vulnerable.</p>
+<h3 id="container-runtime-security">Container runtime security</h3>
+<p>Docker <em>comes with</em> security features but they are (currently) not enaled by default.</p>
+<h2 id="protect-the-engine-and-runtime">Protect the engine and runtime</h2>
+<p>CIS Docker 1.13.0 Benchmark. Boring reading, but pretty important before going into production.</p>
+<h2 id="some-sane-defaults">Some sane defaults</h2>
+<ul>
+<li>Dont run <code>-pid host</code> or <code>--net host</code>.</li>
+<li>Don't bind your daemon to tcp://0.0.0.0:4243. (everywhere, any interface).</li>
+<li>Use TLS for daemon traffic (not enabled by default but there are docs to do this, not hard).</li>
+</ul>
+<p>If you know the process(es) running, lock them down with SELinux, AppArmor or soem other tool</p>
+<h2 id="how-to-add-security-to-docker">How to add security to Docker</h2>
+<p><a href="https://github.com/coreos/clair">Clair</a> - Vulnerability Static Analysis for Containers</p>
+<h3 id="a-better-pipeline">A better pipeline</h3>
+<ol>
+<li>Build image (Dockerfile).</li>
+<li>Scan image (Clair).</li>
+<li>Sign image (Notary).</li>
+<li>Push image to image registry.</li>
+</ol>
+<p>Devs don't have to <em>do</em> everything. But initiaing a conversation with securty to, for example, figure out how images will be signed is crucial. Bring security folks in early.</p>
+<h3 id="dont-pull-base-images-from-external-registries">Don't pull base images from external registries</h3>
+<p>Take the Dockerfile and buid, scan, sign, push internally. </p>
+<h3 id="production-container-runtime-should-only-run-signed-images">Production container runtime should only run signed images</h3>
+<p>Enough said. </p>
+<h3 id="build-deployment-and-running-audit-trail">Build, deployment and running audit trail</h3>
+<p>For compliance, debugging and troubleshooting. Only <em>one</em> way to do these things through a centralised CI/CD system.</p>
+<h2 id="demo">Demo</h2>
+<p>One flag (app-armor profile) prevented the dirtycow privilege escalation hack from working. </p>
+<p>Look for easy security wins and do them ASAP!</p>
+<h2 id="nist-container-security">Nist Container security</h2>
+<p>Run the most minimal OS possible to reduce surface attack area.</p>
+<h2 id="enter-linuxkit-a-way-to-build-container-specific-os">Enter LinuxKit - a way to build container specific OS.</h2>
+<p>Creates an OS in a few minutes.</p>
+<ul>
+<li>Lean OS, miniaml size and boot time.</li>
+<li>4.9 kernel (4.10 soon).</li>
+<li>Batteries included (but can be replaced).</li>
+<li>All system services are containers.</li>
+</ul>
+<p>Allows you to use any container runtime (e.g. just <code>containerd</code> and <code>runc</code>).</p>
+<p>Many other companies working on this apart from Docker.</p>
+<p>Runs on almost anything.</p>
+<p>Docker is in LinuxKit, but is running in a container running with <code>runc</code>. So to run an nginx docker container: runc =&gt; docker =&gt; docker run nginx.</p>
+<p>It's not inception. It's just processes.</p>
+<p>Now allows you to ship a VM (e.g. AMI) as the artifact.</p>
+<h2 id="how-is-it-different-to-a-traditional-os">How is it different to a traditional OS?</h2>
+<ul>
+<li>Smaller attack surface.</li>
+<li>Immutable infrastructure</li>
+<li>Sandboxed system services</li>
+<li>Specialised patches and config.</li>
+<li>Full control over build.</li>
+<li>YAML config.</li>
+</ul>
+<h2 id="questions">Questions</h2>
+<h3 id="coreos-vs-linuxkit">CoreOS vs LinuxKit?</h3>
+<p>Linux Kit is great for if you're distributing a completely built immutable image to customers (e.g. Puppet Server, Couchbase).</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../distributed-command-cog/" class="btn btn-neutral float-right" title="Distributed Command Execution using Containers and Cog">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../orchestrating-least-privilege/" class="btn btn-neutral" title="Orchestrating Least Privilege"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+    
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../orchestrating-least-privilege/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../distributed-command-cog/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script src="../../js/theme.js"></script>
+
+</body>
+</html>

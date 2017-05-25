@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+    
+    <url>
+     <loc>/</loc>
+     <lastmod>2017-05-25</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+        
+    <url>
+     <loc>/day-00-workshops/docker-orchestration-workshop/</loc>
+     <lastmod>2017-05-25</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>/day-00-workshops/brendan-burns-kubernetes-q&a/</loc>
+     <lastmod>2017-05-25</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    
+
+    
+        
+    <url>
+     <loc>/day-01/brendan-burns-container-past-future/</loc>
+     <lastmod>2017-05-25</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>/day-01/kubernetes-meets-linux/</loc>
+     <lastmod>2017-05-25</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>/day-01/containers-from-scratch-the sequel/</loc>
+     <lastmod>2017-05-25</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>/day-01/kubernetes-rise-serverless/</loc>
+     <lastmod>2017-05-25</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>/day-01/oci/</loc>
+     <lastmod>2017-05-25</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    
+
+    
+        
+    <url>
+     <loc>/day-02/orchestrating-least-privilege/</loc>
+     <lastmod>2017-05-25</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>/day-02/docker-container-secure-right/</loc>
+     <lastmod>2017-05-25</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>/day-02/distributed-command-cog/</loc>
+     <lastmod>2017-05-25</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>/day-02/mixing-cgroups-1-2/</loc>
+     <lastmod>2017-05-25</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>/day-02/rootless-containers-runc/</loc>
+     <lastmod>2017-05-25</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>/day-02/kubernetes-next-gen-data-centre/</loc>
+     <lastmod>2017-05-25</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    
+
+    
+    <url>
+     <loc>/cool-links/</loc>
+     <lastmod>2017-05-25</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+</urlset>

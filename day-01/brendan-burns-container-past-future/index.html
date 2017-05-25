@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>Container Journey Past, Present, and Future - Container Camp Sydney 2017</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Container Journey Past, Present, and Future";
+    var mkdocs_page_input_path = "day-01/brendan-burns-container-past-future.md";
+    var mkdocs_page_url = "/day-01/brendan-burns-container-past-future/";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js"></script>
+  <script src="../../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> Container Camp Sydney 2017</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Workshops</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../day-00-workshops/docker-orchestration-workshop/">Docker Orchestration</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../day-00-workshops/brendan-burns-kubernetes-q&a/">Brandan Burns Q&A</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Day 1</span>
+    <ul class="subnav">
+                <li class=" current">
+                    
+    <a class="current" href="./">Container Journey Past, Present, and Future</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#container-journey-past-present-and-future">Container Journey: Past, Present, and Future</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#containers-are-cool-but">Containers are cool, but...</a></li>
+        
+            <li><a class="toctree-l4" href="#why-did-containers-take-off">Why did containers take off?</a></li>
+        
+            <li><a class="toctree-l4" href="#orchestration-benefits">Orchestration benefits</a></li>
+        
+            <li><a class="toctree-l4" href="#kubernetes-services">Kubernetes - Services</a></li>
+        
+            <li><a class="toctree-l4" href="#we-are-we-at-with-container-orchestration-the-commoditisation-phase">We are we at with Container Orchestration? The commoditisation phase</a></li>
+        
+            <li><a class="toctree-l4" href="#the-future">The future</a></li>
+        
+            <li><a class="toctree-l4" href="#we-need-the-right-stuff-done-by-default">We need the right stuff done by default</a></li>
+        
+            <li><a class="toctree-l4" href="#kubernetes-and-third-party-apis">Kubernetes and Third party APIs</a></li>
+        
+            <li><a class="toctree-l4" href="#cool-links">Cool links</a></li>
+        
+        </ul>
+    
+
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../kubernetes-meets-linux/">Kubernetes meets Linux</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../containers-from-scratch-the sequel/">Containers from scratch - the sequel</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../kubernetes-rise-serverless/">Kubernetes and the rise of Serverless</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../oci/">OCI and Open Container Standards</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Day 2</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../day-02/orchestrating-least-privilege/">Orchestrating Least Privilege</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../day-02/docker-container-secure-right/">If It's In a Container It's Secure Right?</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../day-02/distributed-command-cog/">Distributed Command Execution using Containers and Cog</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../day-02/mixing-cgroups-1-2/">Mixing cgroupfs v1 and cgroupfs v2 - finding solutions for container runtimes</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../day-02/rootless-containers-runc/">Rootless Containers with runC</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../day-02/kubernetes-next-gen-data-centre/">Kubernetes and the Next Generation Data Centre</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../cool-links/">Cool Links</a>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">Container Camp Sydney 2017</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Day 1 &raquo;</li>
+        
+      
+    
+    <li>Container Journey Past, Present, and Future</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="container-journey-past-present-and-future">Container Journey: Past, Present, and Future</h1>
+<p>Brendan Burns, Microsoft Azure
+@brendandburns</p>
+<h2 id="containers-are-cool-but">Containers are cool, but...</h2>
+<p>You shouldn't really care about containers, microservices etc.</p>
+<p>You <em>should</em> care about a quality product, your users and customers, your team.</p>
+<p>Containers and container technology simply enable you to do a better job of doing the things you care about for who you care about.</p>
+<p>What may have been an awesome bash script that only worked on Debian 2 years ago, now can be packaged into a container and available to anyone running containers.</p>
+<h2 id="why-did-containers-take-off">Why did containers take off?</h2>
+<ul>
+<li>It was the ultimate way to package your (largely) application irrespective of the environment in which it would run.</li>
+<li>It fitted the CI/CD model beautifully but made it fly with quicker and smaller artefacts.</li>
+</ul>
+<h3 id="positive-impacts">Positive impacts</h3>
+<p>Because a container IS NOT a VM, it forced Devs and Ops to carefully think about the boundaries between the container and the host. "What should be in this thing" forced conversations to happen earlier in the development and deployment process.</p>
+<h3 id="dependency-isolation">Dependency isolation</h3>
+<p>Freeing the application from caring about what else is on the machine.</p>
+<h3 id="we-need-an-orchestrator">We need an orchestrator</h3>
+<p>Moved the orchestration concern from the cloud vendor to the software level</p>
+<p>Why do you need an orchestrator? O(N) = O(1) Run (n) things at the same cost as (1) things.</p>
+<h2 id="orchestration-benefits">Orchestration benefits</h2>
+<ul>
+<li>If a container dies or is unhealthy, the orchestrator self heals without the developer of the app/container writing any code.</li>
+<li>Scale up and down with a command or configure auto-scaling (although orchestrators <em>should not</em> be cloud API aware.)</li>
+</ul>
+<h2 id="kubernetes-services">Kubernetes - Services</h2>
+<ul>
+<li>Services provide load balancers at every tier of your stack so you can individually scale and manage each service individually. </li>
+<li>Not just about running containers, but running services and isolating them from one another.</li>
+<li>As we're now de-coupled from the machine, the machine used to be the identity (e.g. db-1).</li>
+<li>Services now give us a way to identify the parts of our system, but we don't want to name the containers, we want to name the services, the parts of our system.</li>
+<li>This all fits beautifully with microservices architecture which explains why Docker, Orchestrators and Microservices have fuelled the growth of each other.</li>
+</ul>
+<h2 id="we-are-we-at-with-container-orchestration-the-commoditisation-phase">We are we at with Container Orchestration? The commoditisation phase</h2>
+<ul>
+<li>It's a commodity. Spin up a complex cluster in 1 or maybe 2 commands.</li>
+<li>The price is in the price of the compute power, not in the orchestration software.</li>
+<li>Containers mark the first real version of "cloud native" architecture. </li>
+<li>While VM's gave us <em>quicker</em> access to a machine, containers changes how companies will build PaaS and make it affordable and approachable for smaller and niche players to compete with larger vendors due to the commoditising of things such as deployment, packaging, load balancing, distributing load. </li>
+<li>With container orchestration, a Heroku <em>style</em> workflow is now approachable for teams of all sizes.</li>
+</ul>
+<p>This also commoditises many of the services offered by cloud companies as the cloud vendor APIs and capabilities matters, less. All that matters is that it can run the orchestrator well.</p>
+<h2 id="the-future">The future</h2>
+<ul>
+<li>Easier to get started (not teach best practices, they are there by default (e.g. restart if crash), automate more, self-heal, standard patterns (health checks).</li>
+<li>Building distributed systems as a standard application design pattern.</li>
+<li>Distributed systems are or are becoming microservices.</li>
+</ul>
+<h2 id="we-need-the-right-stuff-done-by-default">We need the right stuff done by default</h2>
+<ul>
+<li>Logging</li>
+<li>Monitoring</li>
+<li>Security</li>
+</ul>
+<p>Help people fall into the pit of success and spend time on making a great product, not arguing about which monitoring, or worse, live debugging in production because monitoring doesn't exist and production is down.</p>
+<h3 id="lets-take-monitoring">Lets take monitoring</h3>
+<ol>
+<li>statsd</li>
+<li>Prometheus</li>
+<li>Isn't that what logs are for? (no monitoring)</li>
+</ol>
+<p>Orchestrators should have really good built-in monitoring.</p>
+<p>Customised monitoring solutions should integrate natively into the orchestration solution at the service/cluster layer so the implementation so that monitoring is implemented the same way for each cluster/service every time.
+time every timeevery timeevery timeevery timeevery timeevery timeevery timeevery timeevery timeevery time every</p>
+<h2 id="kubernetes-and-third-party-apis">Kubernetes and Third party APIs</h2>
+<p>We need to move to a more explicit way to describe our environment while working within the extensibility constraints of orchestration tools.</p>
+<p>You can now declare <em>new types</em> (e.g. Load Test Extension API):</p>
+<ul>
+<li>Registers a new API URI for requesting load tests.</li>
+<li>Also watches for the deployment of new versions of specific applications.</li>
+<li>Runs a load test on demand perhaps as part of the blue-green deployment process to ensure that the service is truly ready for production traffic.</li>
+</ul>
+<h2 id="cool-links">Cool links</h2>
+<ul>
+<li><a href="https://github.com/bitnami/kubeless">Kubeless</a> – Serverless Framework for Kubernetes.</li>
+<li><a href="https://helm.sh">Helm</a> - The Kubernetes Package Manager</li>
+<li><a href="https://github.com/jetstack/kube-lego">kube-lego</a> - Kube-Lego automatically requests certificates for Kubernetes Ingress resources from Let's Encrypt</li>
+<li><a href="../deis.io">Deis, Inc</a> - The Kubernetes Company</li>
+</ul>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../kubernetes-meets-linux/" class="btn btn-neutral float-right" title="Kubernetes meets Linux">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../../day-00-workshops/brendan-burns-kubernetes-q&a/" class="btn btn-neutral" title="Brandan Burns Q&A"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+    
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../../day-00-workshops/brendan-burns-kubernetes-q&a/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../kubernetes-meets-linux/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script src="../../js/theme.js"></script>
+
+</body>
+</html>

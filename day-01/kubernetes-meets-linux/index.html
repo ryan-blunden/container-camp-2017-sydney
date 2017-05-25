@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>Kubernetes meets Linux - Container Camp Sydney 2017</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Kubernetes meets Linux";
+    var mkdocs_page_input_path = "day-01/kubernetes-meets-linux.md";
+    var mkdocs_page_url = "/day-01/kubernetes-meets-linux/";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js"></script>
+  <script src="../../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> Container Camp Sydney 2017</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Workshops</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../day-00-workshops/docker-orchestration-workshop/">Docker Orchestration</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../day-00-workshops/brendan-burns-kubernetes-q&a/">Brandan Burns Q&A</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Day 1</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../brendan-burns-container-past-future/">Container Journey Past, Present, and Future</a>
+                </li>
+                <li class=" current">
+                    
+    <a class="current" href="./">Kubernetes meets Linux</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#linux-meets-kubernetes">Linux meets Kubernetes</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#overview">Overview</a></li>
+        
+            <li><a class="toctree-l4" href="#the-anatomy-of-a-running-docker-container">The anatomy of a running Docker container</a></li>
+        
+            <li><a class="toctree-l4" href="#pods">Pods</a></li>
+        
+            <li><a class="toctree-l4" href="#demo">Demo</a></li>
+        
+            <li><a class="toctree-l4" href="#my-side-notes">My side-notes</a></li>
+        
+            <li><a class="toctree-l4" href="#cool-links">Cool links</a></li>
+        
+        </ul>
+    
+
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../containers-from-scratch-the sequel/">Containers from scratch - the sequel</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../kubernetes-rise-serverless/">Kubernetes and the rise of Serverless</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../oci/">OCI and Open Container Standards</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Day 2</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../day-02/orchestrating-least-privilege/">Orchestrating Least Privilege</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../day-02/docker-container-secure-right/">If It's In a Container It's Secure Right?</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../day-02/distributed-command-cog/">Distributed Command Execution using Containers and Cog</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../day-02/mixing-cgroups-1-2/">Mixing cgroupfs v1 and cgroupfs v2 - finding solutions for container runtimes</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../day-02/rootless-containers-runc/">Rootless Containers with runC</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../day-02/kubernetes-next-gen-data-centre/">Kubernetes and the Next Generation Data Centre</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../cool-links/">Cool Links</a>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">Container Camp Sydney 2017</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Day 1 &raquo;</li>
+        
+      
+    
+    <li>Kubernetes meets Linux</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="linux-meets-kubernetes">Linux meets Kubernetes</h1>
+<p>Vishnu Kannan</p>
+<p>https://www.linkedin.com/in/vishnukanan</p>
+<p>https://github.com/vishh?tab=repositories</p>
+<h2 id="overview">Overview</h2>
+<ul>
+<li>Master node and worker nodes</li>
+<li>Containers enable you to focus more on your application and less on where it runs.</li>
+<li>Kubernetes does not use Docker, but uses parts of the Moby project (e.g. runc).</li>
+</ul>
+<h2 id="the-anatomy-of-a-running-docker-container">The anatomy of a running Docker container</h2>
+<ul>
+<li>Overlay (type) filesystem (copy-on-write)</li>
+<li>Control groups (cgroups): Restrict resources, track processes</li>
+<li>Namespaces (virtual context, process trees, network interfaces, users and groups, mounted filesystems).</li>
+<li>Security: Seccomp, Capabilities, AppArmor, SELinux, Filesystem permissions. Provide least privilege.</li>
+<li>Volumes: Simply any data that <em>is not</em> within your overlay file system. Allows data used by your container to live beyond the life of the container.</li>
+<li>Network: Bridge + Veth + Iptables, Overlay and Underlay, eth0 and loopback.</li>
+</ul>
+<h2 id="pods">Pods</h2>
+<p>Now that we all have a common understanding of a container, what is a pod?</p>
+<p>One or more tightly coupled containers and volumes.</p>
+<p>Pods let you build microservices:</p>
+<ul>
+<li>Shared Linux namespace.</li>
+<li>Shared storage.</li>
+<li>Shared network interface.</li>
+<li>Shared control groups.</li>
+</ul>
+<h2 id="demo">Demo</h2>
+<p>Code: Github (will update when I know the repo)</p>
+<h2 id="my-side-notes">My side-notes</h2>
+<p>My opinionated and supposed insights, not what Vish said.</p>
+<h3 id="we-need-to-get-better-at-explaining-what-is">We need to get better at explaining what is:</h3>
+<ul>
+<li>Image</li>
+<li>Container</li>
+<li>Docker</li>
+<li>Docker Inc.</li>
+<li>Moby</li>
+</ul>
+<p>For example, a Debian Docker container does not have a Debian built Linux kernel, it is utilising the kernel from the host. All a Debian image is, is a subset of the binaries and file system structure of Debian.</p>
+<h3 id="a-docker-orchestration-journey">A Docker orchestration journey</h3>
+<p>We need to help the community understand:</p>
+<ul>
+<li>The different orchestrators.</li>
+<li>Which ones fit which purpose.</li>
+<li>How to move from simpler (Docker Swarm, ECS) to more powerful (Kubernetes) and how to translate the learnings so it doesn't feel like they've learnt two different orchestrators.</li>
+</ul>
+<h2 id="cool-links">Cool links</h2>
+<ul>
+<li><a href="http://blog.endpoint.com/2012/01/linux-unshare-m-for-per-process-private.html">unshare</a></li>
+<li><a href="https://github.com/containernetworking/cni">CNI</a></li>
+</ul>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../containers-from-scratch-the sequel/" class="btn btn-neutral float-right" title="Containers from scratch - the sequel">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../brendan-burns-container-past-future/" class="btn btn-neutral" title="Container Journey Past, Present, and Future"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+    
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../brendan-burns-container-past-future/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../containers-from-scratch-the sequel/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script src="../../js/theme.js"></script>
+
+</body>
+</html>

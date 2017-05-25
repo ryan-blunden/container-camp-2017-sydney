@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>Docker Orchestration - Container Camp Sydney 2017</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Docker Orchestration";
+    var mkdocs_page_input_path = "day-00-workshops/docker-orchestration-workshop.md";
+    var mkdocs_page_url = "/day-00-workshops/docker-orchestration-workshop/";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js"></script>
+  <script src="../../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> Container Camp Sydney 2017</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Workshops</span>
+    <ul class="subnav">
+                <li class=" current">
+                    
+    <a class="current" href="./">Docker Orchestration</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#docker-orchestration-workshop">Docker Orchestration workshop</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#workshop-slides-and-code">Workshop slides and code</a></li>
+        
+            <li><a class="toctree-l4" href="#play-with-docker">Play with Docker</a></li>
+        
+            <li><a class="toctree-l4" href="#supergrok">Supergrok</a></li>
+        
+            <li><a class="toctree-l4" href="#why-did-docker-create-moby">Why did Docker create Moby</a></li>
+        
+            <li><a class="toctree-l4" href="#docker-versions">Docker versions</a></li>
+        
+            <li><a class="toctree-l4" href="#docker-tools">Docker tools</a></li>
+        
+            <li><a class="toctree-l4" href="#docker-dns">Docker DNS</a></li>
+        
+            <li><a class="toctree-l4" href="#docker-security">Docker Security</a></li>
+        
+            <li><a class="toctree-l4" href="#docker-compose-nuggets">Docker Compose nuggets</a></li>
+        
+            <li><a class="toctree-l4" href="#swarm">Swarm</a></li>
+        
+            <li><a class="toctree-l4" href="#swarm-issues">Swarm issues?</a></li>
+        
+            <li><a class="toctree-l4" href="#wtf-is-raft">WTF is Raft?</a></li>
+        
+            <li><a class="toctree-l4" href="#questions-asked">Questions asked?</a></li>
+        
+            <li><a class="toctree-l4" href="#random-insights">Random Insights</a></li>
+        
+            <li><a class="toctree-l4" href="#random">Random</a></li>
+        
+        </ul>
+    
+
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../brendan-burns-kubernetes-q&a/">Brandan Burns Q&A</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Day 1</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../day-01/brendan-burns-container-past-future/">Container Journey Past, Present, and Future</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../day-01/kubernetes-meets-linux/">Kubernetes meets Linux</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../day-01/containers-from-scratch-the sequel/">Containers from scratch - the sequel</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../day-01/kubernetes-rise-serverless/">Kubernetes and the rise of Serverless</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../day-01/oci/">OCI and Open Container Standards</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Day 2</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../day-02/orchestrating-least-privilege/">Orchestrating Least Privilege</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../day-02/docker-container-secure-right/">If It's In a Container It's Secure Right?</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../day-02/distributed-command-cog/">Distributed Command Execution using Containers and Cog</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../day-02/mixing-cgroups-1-2/">Mixing cgroupfs v1 and cgroupfs v2 - finding solutions for container runtimes</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../day-02/rootless-containers-runc/">Rootless Containers with runC</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../day-02/kubernetes-next-gen-data-centre/">Kubernetes and the Next Generation Data Centre</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../cool-links/">Cool Links</a>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">Container Camp Sydney 2017</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Workshops &raquo;</li>
+        
+      
+    
+    <li>Docker Orchestration</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="docker-orchestration-workshop">Docker Orchestration workshop</h1>
+<p>Docker Captain Scott Coulton</p>
+<p>scottcoulton</p>
+<h2 id="workshop-slides-and-code">Workshop slides and code</h2>
+<p>https://github.com/scotty-c/orchestration-workshop</p>
+<h2 id="play-with-docker">Play with Docker</h2>
+<ul>
+<li>play-with-docker.com is awesome!</li>
+<li>Status icons indicate Docker status (none, manager or worker).</li>
+<li>Adjust terminal size.</li>
+</ul>
+<h2 id="supergrok">Supergrok</h2>
+<p><a href="https://github.com/jpetazzo/supergrok">Supergrok</a> provides a proxy so we can view our app running on play-with-docker.com. I think...</p>
+<h2 id="why-did-docker-create-moby">Why did Docker create Moby</h2>
+<ul>
+<li>Resolves the confusion around "Docker" the product vs "Docker" the client/engine</li>
+<li>Peeps were pissed that orchestration was being bundled with Docker. K8 mad!</li>
+<li>Moby is the upstream of Docker Inc.</li>
+<li>Packaging of Docker CE and Docker EE is closed.</li>
+<li>But as all Docker projects are now open source, projects like K8 can now construct their own container runtime.</li>
+</ul>
+<h2 id="docker-versions">Docker versions</h2>
+<ul>
+<li>Docker CE releases are maintained (patched) 4+ months</li>
+<li>Docker EE releases are maintained (patched) 12+ months</li>
+</ul>
+<h2 id="docker-tools">Docker tools</h2>
+<p>Tools such as secrets management, singing of images is Open Source but its pretty hard to setup, hence EE.</p>
+<h2 id="docker-dns">Docker DNS</h2>
+<p>Every container at 127.0.0.11 has a DNS server available to it. </p>
+<h2 id="docker-security">Docker Security</h2>
+<ul>
+<li>Docker by default can be broken out of: </li>
+<li>previledge escalation kernel patch required.</li>
+<li>Create user, add to Docker group but make sure Docker group and user not privledged.</li>
+<li><code>--security-opts</code> - app armour and SELinux and you can apply that as one option.</li>
+<li>But... app armour with orchestration is really tough.</li>
+<li>Looking at pushing up these security controls through capabilities and they translate into SELinux or App Armor in the background.</li>
+<li>Don't run <code>pidhost</code> or <code>nethost</code> - ok for development, but never in prod. Be aware of the risks.</li>
+<li>Who's responsible for securing the running of Docker? - Scott thinks SRE, Security and Ops</li>
+<li>Who owns the crypto signing? Probably not Ops, probably Sec.</li>
+<li>Using runc or containerd directly can reduce a lot of security issues but is more complex to support and implement.</li>
+<li>CIS Engine benchmark</li>
+</ul>
+<h2 id="docker-compose-nuggets">Docker Compose nuggets</h2>
+<ul>
+<li><code>docker-compose --logs</code> (many of the same options as <code>docker logs</code>) exposes logs for the whole app.</li>
+<li><code>Stacks</code> only work on Compose v3.1 files and above.</li>
+<li><code>Stacks</code> only work on Swarm.</li>
+<li>Compose is now a way to "compose" services that can be deployed with Swarm. The history is confusing. Compose v 3.1 files are the way forward.</li>
+</ul>
+<h2 id="swarm">Swarm</h2>
+<ul>
+<li>Since 1.12</li>
+<li>Forget anything before SwarmKit.</li>
+<li>Don't put containers on management nodes.</li>
+<li>3 nodes is good for most use-cases.</li>
+<li>If the root key from the master node is comprimised, you can change the root key on the fly and boot any hacking nodes that joined using the old key. Pretty cool!</li>
+<li>Integration with [overlay networks] and [load balancing]</li>
+<li>Any node can be a worker or manager but only operational tasks can be done on a manager (operate with <a href="https://en.wikipedia.org/wiki/Principle_of_least_privilege">least privledge</a>.</li>
+<li>Only ever ONE manager leader at a time. Checks every minute or so.</li>
+<li>Docker can snapshot your configuration so you can roll-back.</li>
+<li>Docker engine talks to Swarm through the SwarmKit API</li>
+<li>Swarm Management: Swarm =&gt; Docker CLI =&gt; SwarmKit?</li>
+<li>Manager node location cannot be discovered from a worker node for security. </li>
+<li>
+<p>TIP: If using Multihoming, you'll need to use <code>--advertise-addr</code> to choose.</p>
+<p>$ docker swarm init --advertise-addr 10.0.13.3
+Swarm initialized: current node (rkexwo2b2numi48ruj5qmt9et) is now a manager.</p>
+<p>To add a worker to this swarm, run the following command:</p>
+<pre><code>docker swarm join \
+--token SWMTKN-1-3n2uiepbd7vy06rsuon8zw36zbk27l9mq0b87s4c5ru1tznyrt-1zlfc48x8mx27uydlg32pvrsy \
+10.0.13.3:2377
+</code></pre>
+</li>
+</ul>
+<p>To add a manager to this swarm, run 'docker swarm join-token manager' and follow the instructions.</p>
+<ul>
+<li>Two keys: Manager key and Worker key.</li>
+<li><code>docker info</code> also displays Swarm info. <code>docker info</code> displays more Swarm metadata on the manager node but not the worker node.</li>
+<li>Kubernetes is a lot more configurable, but a lot more work. Great for managing thousands of nodes or that have complex requiurements.</li>
+<li>For most people, Docker Swarm is going to be enough.</li>
+<li>Play with Docker is awesome for testing out Swarm as you can create multiple instances.</li>
+<li>Under the hood, tokens prevent <a href="http://www.computerworld.com/article/2475102/cybercrime-hacking/steve-gibson-s-fingerprint-service-detects-ssl-man-in-the-middle-spying.html">MITM attacks</a></li>
+</ul>
+<h2 id="swarm-issues">Swarm issues?</h2>
+<ul>
+<li>It's probably to do with the KV store as so much information (network, nodes etc), it's all in there.</li>
+<li>If you lose all of the manager nodes, the worker nodes will continue to run, but you'll need to create a new cluster with new mangaers and migrate.</li>
+<li>Create separate clusters in multiple AZs and have a load balancer manage traffic between them. Advice was to not have Docker swarm manage nodes across different AZ, Kubernetes has the same recommendations.]</li>
+<li>If you try to scale up but don't have the resources? An error will be thrown which could be listened for and used to trigger the changing of an autoscale/instance number rule.</li>
+</ul>
+<h2 id="wtf-is-raft">WTF is Raft?</h2>
+<ul>
+<li>KV store used for storing of tasks and state.</li>
+<li>Docker has built their own Raft implemenetation so SSL is built-in, turned on and performant.</li>
+<li><a href="https://success.docker.com/Architecture/Docker_Reference_Architecture%3A_Universal_Control_Plane_2.0_Service_Discovery_and_Load_Balancing#The_HTTP_Routing_Mesh">https mesh routing</a></li>
+</ul>
+<h2 id="questions-asked">Questions asked?</h2>
+<ul>
+<li>How do I learn about Linux?</li>
+<li>E.g, basic concepts?</li>
+<li>How does Docker fit in to architecture? E.g. Serverless and Docker or not Docker? </li>
+<li>When do you recommend to your client to <em>use</em> Docker containers vs Serverless vs ?</li>
+<li>Health check: Swarm can use them but something like Prometheus can then trigger Swarm.</li>
+<li>How do Configuration Managment tools fit it with Swarm?
+    CM tools (e.g. Chef/Puppet) configure the artifacts (e.g. VM) but a job/task through a CI/Deployment tool is the thing that will coordinate the deployment and management of resources.</li>
+</ul>
+<h2 id="random-insights">Random Insights</h2>
+<ul>
+<li>Linux Kit to build specific purpose VMS. In minutes!</li>
+<li>Sign and distribute containers. By default! Today!</li>
+<li>Easiest way to learn Docker - <a href="http://training.play-with-docker.com/">Training and Play with Docker</a></li>
+</ul>
+<h2 id="random">Random</h2>
+<ul>
+<li>tmux (according to Scott) is good (better than screen): Maybe?<ul>
+<li>https://tmux.github.io/</li>
+<li>https://robots.thoughtbot.com/a-tmux-crash-course</li>
+<li>https://dominik.honnef.co/posts/2010/10/tmux-vs-screen/</li>
+<li>https://superuser.com/questions/236158/tmux-vs-screen</li>
+<li>https://brandonwamboldt.ca/tmux-vs-screen-1817/</li>
+</ul>
+</li>
+</ul>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../brendan-burns-kubernetes-q&a/" class="btn btn-neutral float-right" title="Brandan Burns Q&A">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../.." class="btn btn-neutral" title="Home"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+    
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../.." style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../brendan-burns-kubernetes-q&a/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script src="../../js/theme.js"></script>
+
+</body>
+</html>

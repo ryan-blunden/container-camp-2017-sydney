@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>Mixing cgroupfs v1 and cgroupfs v2 - finding solutions for container runtimes - Container Camp Sydney 2017</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Mixing cgroupfs v1 and cgroupfs v2 - finding solutions for container runtimes";
+    var mkdocs_page_input_path = "day-02/mixing-cgroups-1-2.md";
+    var mkdocs_page_url = "/day-02/mixing-cgroups-1-2/";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js"></script>
+  <script src="../../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> Container Camp Sydney 2017</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Workshops</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../day-00-workshops/docker-orchestration-workshop/">Docker Orchestration</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../day-00-workshops/brendan-burns-kubernetes-q&a/">Brandan Burns Q&A</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Day 1</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../day-01/brendan-burns-container-past-future/">Container Journey Past, Present, and Future</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../day-01/kubernetes-meets-linux/">Kubernetes meets Linux</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../day-01/containers-from-scratch-the sequel/">Containers from scratch - the sequel</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../day-01/kubernetes-rise-serverless/">Kubernetes and the rise of Serverless</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../day-01/oci/">OCI and Open Container Standards</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Day 2</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../orchestrating-least-privilege/">Orchestrating Least Privilege</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../docker-container-secure-right/">If It's In a Container It's Secure Right?</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../distributed-command-cog/">Distributed Command Execution using Containers and Cog</a>
+                </li>
+                <li class=" current">
+                    
+    <a class="current" href="./">Mixing cgroupfs v1 and cgroupfs v2 - finding solutions for container runtimes</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#mixing-cgroupfs-v1-and-cgroupfs-v2-finding-solutions-for-container-runtimes">Mixing cgroupfs v1 and cgroupfs v2: finding solutions for container runtimes</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#note">Note</a></li>
+        
+            <li><a class="toctree-l4" href="#cgroups">Cgroups</a></li>
+        
+            <li><a class="toctree-l4" href="#cgroup-v1">cgroup v1</a></li>
+        
+            <li><a class="toctree-l4" href="#cgroup-v2">cgroup v2</a></li>
+        
+            <li><a class="toctree-l4" href="#what-does-this-mean-for-runc">What does this mean for runc</a></li>
+        
+            <li><a class="toctree-l4" href="#to-make-sure-runc-is-not-broken-for-you-in-the-future">To make sure runc is not broken for you in the future</a></li>
+        
+        </ul>
+    
+
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../rootless-containers-runc/">Rootless Containers with runC</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../kubernetes-next-gen-data-centre/">Kubernetes and the Next Generation Data Centre</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../cool-links/">Cool Links</a>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">Container Camp Sydney 2017</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Day 2 &raquo;</li>
+        
+      
+    
+    <li>Mixing cgroupfs v1 and cgroupfs v2 - finding solutions for container runtimes</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="mixing-cgroupfs-v1-and-cgroupfs-v2-finding-solutions-for-container-runtimes">Mixing cgroupfs v1 and cgroupfs v2: finding solutions for container runtimes</h1>
+<p>Christian Brauner - Canonical</p>
+<p>brau_ner</p>
+<h2 id="note">Note</h2>
+<p><em>All of this talk went over my head.</em> The notes I've taken are probably inaccurate, wrong or at least severely lacking detail.</p>
+<p>But I loved that we had a presentation from someone with such deep knowledge of the Linux kernel present.</p>
+<h2 id="cgroups">Cgroups</h2>
+<ul>
+<li>Pseudo kernal filesystem following the vfs</li>
+<li>colllection of processes</li>
+<li>resource management and tracking (e.g. CPU, memory, disk I/O, network, etc).</li>
+</ul>
+<p>croups can also do things like only allow this process to use processes 1-2.</p>
+<h2 id="cgroup-v1">cgroup v1</h2>
+<p><code>ls -al /sys/fs/cgroup</code>.</p>
+<p>All current container runtimes use cgroup v1.</p>
+<h2 id="cgroup-v2">cgroup v2</h2>
+<p>There can only be one heirarchy, distributed top down.</p>
+<p>Did not really understand anything else beyond this point...</p>
+<h2 id="what-does-this-mean-for-runc">What does this mean for runc</h2>
+<p>Everything is fine for now, as long as your not using a vgroup v2 hiearachy or a hybrid hierarchy.</p>
+<h2 id="to-make-sure-runc-is-not-broken-for-you-in-the-future">To make sure runc is not broken for you in the future</h2>
+<p><em>Warning: This has not been tested and verified by me yet</em>.</p>
+<p>Change <code>GRUB_CMDLINE_LINUX_DEFAULT</code> in <code>/etc/default/grub</code> so that it looks like this:</p>
+<pre><code>GRUB_CMDLINE_LINUX_DEFAULT="quiet systemd.legacy_systemd_cgroup_controller=yes"
+</code></pre>
+<p>Credit: https://github.com/moby/moby/issues/28109#issuecomment-259122113</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../rootless-containers-runc/" class="btn btn-neutral float-right" title="Rootless Containers with runC">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../distributed-command-cog/" class="btn btn-neutral" title="Distributed Command Execution using Containers and Cog"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+    
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../distributed-command-cog/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../rootless-containers-runc/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script src="../../js/theme.js"></script>
+
+</body>
+</html>

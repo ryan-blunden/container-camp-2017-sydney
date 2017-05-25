@@ -1,8 +1,0 @@
-site
-LICENSE
-README.md
-Ryan Blunden Docker Multi-Stage Builds Lightening Talk.pdf
-docker-compose.yml
-.gitignore
-Dockerfile
-Makefile

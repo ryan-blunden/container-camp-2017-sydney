@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>Brandan Burns Q&A - Container Camp Sydney 2017</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Brandan Burns Q&A";
+    var mkdocs_page_input_path = "day-00-workshops/brendan-burns-kubernetes-q&a.md";
+    var mkdocs_page_url = "/day-00-workshops/brendan-burns-kubernetes-q&a/";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js"></script>
+  <script src="../../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> Container Camp Sydney 2017</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Workshops</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../docker-orchestration-workshop/">Docker Orchestration</a>
+                </li>
+                <li class=" current">
+                    
+    <a class="current" href="./">Brandan Burns Q&A</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#brendan-burns-kubernetes-and-containers-qa">Brendan Burns Kubernetes and Containers Q&amp;A</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#hypersh">hyper.sh</a></li>
+        
+            <li><a class="toctree-l4" href="#secrets-management">Secrets Management</a></li>
+        
+            <li><a class="toctree-l4" href="#kubernetes-networking">Kubernetes networking</a></li>
+        
+            <li><a class="toctree-l4" href="#question-why-kubernetes-vs-ecs">Question: Why Kubernetes vs ECS?</a></li>
+        
+            <li><a class="toctree-l4" href="#for-aws">For AWS:</a></li>
+        
+            <li><a class="toctree-l4" href="#is-kubernetes-too-heavy">Is Kubernetes too heavy?</a></li>
+        
+            <li><a class="toctree-l4" href="#bridging-the-old-and-new-worlds">Bridging the old and new worlds</a></li>
+        
+            <li><a class="toctree-l4" href="#serverless-vs-functions-as-a-service-faas">Serverless vs Functions As a Service (FAAS)</a></li>
+        
+            <li><a class="toctree-l4" href="#should-we-be-automating-everything">Should we be automating everything?</a></li>
+        
+            <li><a class="toctree-l4" href="#how-to-learn-kubenetes">How to learn Kubenetes?</a></li>
+        
+            <li><a class="toctree-l4" href="#noops-is-it-real">NoOps. Is it real?</a></li>
+        
+            <li><a class="toctree-l4" href="#whats-the-next-killer-feature-for-kubernetes">What's the next killer feature for Kubernetes</a></li>
+        
+        </ul>
+    
+
+    </ul>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Day 1</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../day-01/brendan-burns-container-past-future/">Container Journey Past, Present, and Future</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../day-01/kubernetes-meets-linux/">Kubernetes meets Linux</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../day-01/containers-from-scratch-the sequel/">Containers from scratch - the sequel</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../day-01/kubernetes-rise-serverless/">Kubernetes and the rise of Serverless</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../day-01/oci/">OCI and Open Container Standards</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Day 2</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../day-02/orchestrating-least-privilege/">Orchestrating Least Privilege</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../day-02/docker-container-secure-right/">If It's In a Container It's Secure Right?</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../day-02/distributed-command-cog/">Distributed Command Execution using Containers and Cog</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../day-02/mixing-cgroups-1-2/">Mixing cgroupfs v1 and cgroupfs v2 - finding solutions for container runtimes</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../day-02/rootless-containers-runc/">Rootless Containers with runC</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../day-02/kubernetes-next-gen-data-centre/">Kubernetes and the Next Generation Data Centre</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../cool-links/">Cool Links</a>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">Container Camp Sydney 2017</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Workshops &raquo;</li>
+        
+      
+    
+    <li>Brandan Burns Q&A</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="brendan-burns-kubernetes-and-containers-qa">Brendan Burns Kubernetes and Containers Q&amp;A</h1>
+<p>https://twitter.com/brendandburns</p>
+<p>https://github.com/brendandburns</p>
+<p>Kubernetes co-founder</p>
+<p><a href="https://azure.microsoft.com/en-au/blog/public-preview-of-azure-cloud-shell/">Azure Cloud Shell</a>
+Powershell coming soon which will be Windows Docker containers being orchestrated by Kubernetes.</p>
+<p>Images need to use labels to indicate architecture (ARM) or OS (Windows) otherwise, the orchestrator.</p>
+<h2 id="hypersh">hyper.sh</h2>
+<p>Hyper is a Dockerlike API but it launches them inside a Linux hypervisor. Caveat: The cloud doesn't work with nested virtualisation really.</p>
+<h2 id="secrets-management">Secrets Management</h2>
+<p>Where does the <em>trust</em> come from? It doesn't come from anywhere because someone has to have access somewhere.</p>
+<p>Secrets File as a RAM disk in case the machine gets comprimised (Similar to Docker Swarm secrets.</p>
+<p>It's more about understanding the threat models and mitigating those that matter as much as possible.</p>
+<p>Problem: Identity and a container. WHO is a container? Who does it run as? What is it allowed to do/get/read/write.</p>
+<ul>
+<li>Identities are more like roles. E.g, a <code>front-end</code> (role) identity, not a <code>nodejs</code> (type) identity.</li>
+</ul>
+<h2 id="kubernetes-networking">Kubernetes networking</h2>
+<ul>
+<li>Each container has an IP address. Why?</li>
+<li>Application oriented API.</li>
+<li>Uses the Cloud routing API to get a routable IP address for each container. </li>
+<li>Kubernetes namespaces provides isolated networks for containers to talk to each other to.</li>
+</ul>
+<h2 id="question-why-kubernetes-vs-ecs">Question: Why Kubernetes vs ECS?</h2>
+<p>Managed    |    Unmanaged
+  &lt; ops      |    &gt; ops
+  &lt; freedom  |    &gt; freedom</p>
+<p>ECS        |    Kubernetes
+  &lt; Lock-in  |    &gt; Freedom
+  &lt; Closed   |    &gt; Open</p>
+<h2 id="for-aws">For AWS:</h2>
+<ul>
+<li>kops</li>
+<li>kubeadmin</li>
+</ul>
+<h2 id="is-kubernetes-too-heavy">Is Kubernetes too heavy?</h2>
+<p>Question is too simplistic. More configuration up-front yes.</p>
+<ul>
+<li>Deis (Heroku style workflow ontop of Kubernetes).</li>
+<li>Helm: Application package manager.</li>
+</ul>
+<h2 id="bridging-the-old-and-new-worlds">Bridging the old and new worlds</h2>
+<p>Need to be flexible. E.g. RDMS. Find a way to inject it hostname/ipaddress into your microservices stack so it "seems" like its from the new world, its not. </p>
+<p>We should stop bashing those who create "fat" containers. This is the real world and not everyone can or is converting their systems to microservices.</p>
+<p>We need to be accepting of everyones unique circumstances, skills and constraints and simply help them embrace Docker where it makese sense and as best they can.</p>
+<h2 id="serverless-vs-functions-as-a-service-faas">Serverless vs Functions As a Service (FAAS)</h2>
+<p>Is serverless when you don't care about the machine, host. In that way, Docker can be a form of serverless architecture.</p>
+<p>FAAS in the future might simply be a certain type of application deployed via a container orchestrator.</p>
+<p>As scale increases, Lambda run per request at 1,000's of requests per seecond isn't neccesarily cheaper. No silver bullet.</p>
+<p>But managing a very specific action as a result of a request from say a webhook is a great idea, but it doesn't have to be on Lambda.</p>
+<h2 id="should-we-be-automating-everything">Should we be automating everything?</h2>
+<p>Yes. More from the point of view it forces you to ensure that everything is thoroughly tested, bullet-proof and has thought about all the different things that can go wrong.</p>
+<h2 id="how-to-learn-kubenetes">How to learn Kubenetes?</h2>
+<p><code>kubectrl</code> doesn't help. It helps you get Kubenetes deployed and up and running quickly and more easily, but all it does is hide details from you that you must now before you go to production.</p>
+<h2 id="noops-is-it-real">NoOps. Is it real?</h2>
+<p>No.</p>
+<p>What is happening though, is that the coupling between the application/workload and the host OS is being severed.</p>
+<p>So perhaps <em>LessOps</em> is a better term.</p>
+<p>No matter what, we now have lots of different "Ops" to care about now:</p>
+<ul>
+<li>AppOps</li>
+<li>SecOps</li>
+<li>ClusterOps</li>
+<li>SysOps</li>
+<li>NetOps</li>
+<li>StorageOps</li>
+<li>KernelOps</li>
+<li>Data/Backup Ops</li>
+<li>ChatOps</li>
+</ul>
+<p>So the ability to be clear about responsibilities and how teams hand-off and work together (not just blame each other) is so important.</p>
+<p>Writing tutorials and great docs is a crucial skill these days as the surface-area of concepts grows exponentially.</p>
+<h2 id="whats-the-next-killer-feature-for-kubernetes">What's the next killer feature for Kubernetes</h2>
+<ul>
+<li>Eventing </li>
+<li>Identity, Pod level identity</li>
+<li>Slowing down and stopping adding new APIs.</li>
+<li>Better user guides to help people learn how Kubernetes works, not just hiding the details with <code>kubectl</code>.</li>
+</ul>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../../day-01/brendan-burns-container-past-future/" class="btn btn-neutral float-right" title="Container Journey Past, Present, and Future">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../docker-orchestration-workshop/" class="btn btn-neutral" title="Docker Orchestration"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+    
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../docker-orchestration-workshop/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../../day-01/brendan-burns-container-past-future/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script src="../../js/theme.js"></script>
+
+</body>
+</html>

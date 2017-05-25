@@ -1,0 +1,709 @@
+{
+    "docs": [
+        {
+            "location": "/",
+            "text": "Container Camp Sydney 2017 notes\n\n\nHello! I'm \nRyan Blunden\n and I learn the most at conferences by taking notes. Very rough notes ;).\n\n\nThis repo and micro-site is the entire capture of my notes and musings from the \nContainer Camp Sydney 2017 conference\n.\n\n\nPlease note\n that this content is \nmy opinionated interpretation and paraphrasing\n of workshops and presentations and as such, does not represent the actual content, thoughts or opinions of the presenters. It is full of typos and badly constructed sentances. It is a brain dump, not a series of essays.\n\n\nIf I have written something you disagree with and needs to be corrected, please create and issue or make a pull-request.\n\n\nHopefully you find these notes useful!\n\n\nConference schedule\n\n\nTake a look at the \nContainer Camp 2017 conference schedule\n as I did not take notes for all sessions.\n\n\nThe conference oraganisers will also be publishing all \nvideos on their YouTube account\n.",
+            "title": "Home"
+        },
+        {
+            "location": "/#container-camp-sydney-2017-notes",
+            "text": "Hello! I'm  Ryan Blunden  and I learn the most at conferences by taking notes. Very rough notes ;).  This repo and micro-site is the entire capture of my notes and musings from the  Container Camp Sydney 2017 conference .  Please note  that this content is  my opinionated interpretation and paraphrasing  of workshops and presentations and as such, does not represent the actual content, thoughts or opinions of the presenters. It is full of typos and badly constructed sentances. It is a brain dump, not a series of essays.  If I have written something you disagree with and needs to be corrected, please create and issue or make a pull-request.  Hopefully you find these notes useful!",
+            "title": "Container Camp Sydney 2017 notes"
+        },
+        {
+            "location": "/#conference-schedule",
+            "text": "Take a look at the  Container Camp 2017 conference schedule  as I did not take notes for all sessions.  The conference oraganisers will also be publishing all  videos on their YouTube account .",
+            "title": "Conference schedule"
+        },
+        {
+            "location": "/day-00-workshops/docker-orchestration-workshop/",
+            "text": "Docker Orchestration workshop\n\n\nDocker Captain Scott Coulton\n\n\nscottcoulton\n\n\nWorkshop slides and code\n\n\nhttps://github.com/scotty-c/orchestration-workshop\n\n\nPlay with Docker\n\n\n\n\nplay-with-docker.com is awesome!\n\n\nStatus icons indicate Docker status (none, manager or worker).\n\n\nAdjust terminal size.\n\n\n\n\nSupergrok\n\n\nSupergrok\n provides a proxy so we can view our app running on play-with-docker.com. I think...\n\n\nWhy did Docker create Moby\n\n\n\n\nResolves the confusion around \"Docker\" the product vs \"Docker\" the client/engine\n\n\nPeeps were pissed that orchestration was being bundled with Docker. K8 mad!\n\n\nMoby is the upstream of Docker Inc.\n\n\nPackaging of Docker CE and Docker EE is closed.\n\n\nBut as all Docker projects are now open source, projects like K8 can now construct their own container runtime.\n\n\n\n\nDocker versions\n\n\n\n\nDocker CE releases are maintained (patched) 4+ months\n\n\nDocker EE releases are maintained (patched) 12+ months\n\n\n\n\nDocker tools\n\n\nTools such as secrets management, singing of images is Open Source but its pretty hard to setup, hence EE.\n\n\nDocker DNS\n\n\nEvery container at 127.0.0.11 has a DNS server available to it. \n\n\nDocker Security\n\n\n\n\nDocker by default can be broken out of: \n\n\npreviledge escalation kernel patch required.\n\n\nCreate user, add to Docker group but make sure Docker group and user not privledged.\n\n\n--security-opts\n - app armour and SELinux and you can apply that as one option.\n\n\nBut... app armour with orchestration is really tough.\n\n\nLooking at pushing up these security controls through capabilities and they translate into SELinux or App Armor in the background.\n\n\nDon't run \npidhost\n or \nnethost\n - ok for development, but never in prod. Be aware of the risks.\n\n\nWho's responsible for securing the running of Docker? - Scott thinks SRE, Security and Ops\n\n\nWho owns the crypto signing? Probably not Ops, probably Sec.\n\n\nUsing runc or containerd directly can reduce a lot of security issues but is more complex to support and implement.\n\n\nCIS Engine benchmark\n\n\n\n\nDocker Compose nuggets\n\n\n\n\ndocker-compose --logs\n (many of the same options as \ndocker logs\n) exposes logs for the whole app.\n\n\nStacks\n only work on Compose v3.1 files and above.\n\n\nStacks\n only work on Swarm.\n\n\nCompose is now a way to \"compose\" services that can be deployed with Swarm. The history is confusing. Compose v 3.1 files are the way forward.\n\n\n\n\nSwarm\n\n\n\n\nSince 1.12\n\n\nForget anything before SwarmKit.\n\n\nDon't put containers on management nodes.\n\n\n3 nodes is good for most use-cases.\n\n\nIf the root key from the master node is comprimised, you can change the root key on the fly and boot any hacking nodes that joined using the old key. Pretty cool!\n\n\nIntegration with [overlay networks] and [load balancing]\n\n\nAny node can be a worker or manager but only operational tasks can be done on a manager (operate with \nleast privledge\n.\n\n\nOnly ever ONE manager leader at a time. Checks every minute or so.\n\n\nDocker can snapshot your configuration so you can roll-back.\n\n\nDocker engine talks to Swarm through the SwarmKit API\n\n\nSwarm Management: Swarm => Docker CLI => SwarmKit?\n\n\nManager node location cannot be discovered from a worker node for security. \n\n\n\n\nTIP: If using Multihoming, you'll need to use \n--advertise-addr\n to choose.\n\n\n$ docker swarm init --advertise-addr 10.0.13.3\nSwarm initialized: current node (rkexwo2b2numi48ruj5qmt9et) is now a manager.\n\n\nTo add a worker to this swarm, run the following command:\n\n\ndocker swarm join \\\n--token SWMTKN-1-3n2uiepbd7vy06rsuon8zw36zbk27l9mq0b87s4c5ru1tznyrt-1zlfc48x8mx27uydlg32pvrsy \\\n10.0.13.3:2377\n\n\n\n\n\n\n\nTo add a manager to this swarm, run 'docker swarm join-token manager' and follow the instructions.\n\n\n\n\nTwo keys: Manager key and Worker key.\n\n\ndocker info\n also displays Swarm info. \ndocker info\n displays more Swarm metadata on the manager node but not the worker node.\n\n\nKubernetes is a lot more configurable, but a lot more work. Great for managing thousands of nodes or that have complex requiurements.\n\n\nFor most people, Docker Swarm is going to be enough.\n\n\nPlay with Docker is awesome for testing out Swarm as you can create multiple instances.\n\n\nUnder the hood, tokens prevent \nMITM attacks\n\n\n\n\nSwarm issues?\n\n\n\n\nIt's probably to do with the KV store as so much information (network, nodes etc), it's all in there.\n\n\nIf you lose all of the manager nodes, the worker nodes will continue to run, but you'll need to create a new cluster with new mangaers and migrate.\n\n\nCreate separate clusters in multiple AZs and have a load balancer manage traffic between them. Advice was to not have Docker swarm manage nodes across different AZ, Kubernetes has the same recommendations.]\n\n\nIf you try to scale up but don't have the resources? An error will be thrown which could be listened for and used to trigger the changing of an autoscale/instance number rule.\n\n\n\n\nWTF is Raft?\n\n\n\n\nKV store used for storing of tasks and state.\n\n\nDocker has built their own Raft implemenetation so SSL is built-in, turned on and performant.\n\n\nhttps mesh routing\n\n\n\n\nQuestions asked?\n\n\n\n\nHow do I learn about Linux?\n\n\nE.g, basic concepts?\n\n\nHow does Docker fit in to architecture? E.g. Serverless and Docker or not Docker? \n\n\nWhen do you recommend to your client to \nuse\n Docker containers vs Serverless vs ?\n\n\nHealth check: Swarm can use them but something like Prometheus can then trigger Swarm.\n\n\nHow do Configuration Managment tools fit it with Swarm?\n    CM tools (e.g. Chef/Puppet) configure the artifacts (e.g. VM) but a job/task through a CI/Deployment tool is the thing that will coordinate the deployment and management of resources.\n\n\n\n\nRandom Insights\n\n\n\n\nLinux Kit to build specific purpose VMS. In minutes!\n\n\nSign and distribute containers. By default! Today!\n\n\nEasiest way to learn Docker - \nTraining and Play with Docker\n\n\n\n\nRandom\n\n\n\n\ntmux (according to Scott) is good (better than screen): Maybe?\n\n\nhttps://tmux.github.io/\n\n\nhttps://robots.thoughtbot.com/a-tmux-crash-course\n\n\nhttps://dominik.honnef.co/posts/2010/10/tmux-vs-screen/\n\n\nhttps://superuser.com/questions/236158/tmux-vs-screen\n\n\nhttps://brandonwamboldt.ca/tmux-vs-screen-1817/",
+            "title": "Docker Orchestration"
+        },
+        {
+            "location": "/day-00-workshops/docker-orchestration-workshop/#docker-orchestration-workshop",
+            "text": "Docker Captain Scott Coulton  scottcoulton",
+            "title": "Docker Orchestration workshop"
+        },
+        {
+            "location": "/day-00-workshops/docker-orchestration-workshop/#workshop-slides-and-code",
+            "text": "https://github.com/scotty-c/orchestration-workshop",
+            "title": "Workshop slides and code"
+        },
+        {
+            "location": "/day-00-workshops/docker-orchestration-workshop/#play-with-docker",
+            "text": "play-with-docker.com is awesome!  Status icons indicate Docker status (none, manager or worker).  Adjust terminal size.",
+            "title": "Play with Docker"
+        },
+        {
+            "location": "/day-00-workshops/docker-orchestration-workshop/#supergrok",
+            "text": "Supergrok  provides a proxy so we can view our app running on play-with-docker.com. I think...",
+            "title": "Supergrok"
+        },
+        {
+            "location": "/day-00-workshops/docker-orchestration-workshop/#why-did-docker-create-moby",
+            "text": "Resolves the confusion around \"Docker\" the product vs \"Docker\" the client/engine  Peeps were pissed that orchestration was being bundled with Docker. K8 mad!  Moby is the upstream of Docker Inc.  Packaging of Docker CE and Docker EE is closed.  But as all Docker projects are now open source, projects like K8 can now construct their own container runtime.",
+            "title": "Why did Docker create Moby"
+        },
+        {
+            "location": "/day-00-workshops/docker-orchestration-workshop/#docker-versions",
+            "text": "Docker CE releases are maintained (patched) 4+ months  Docker EE releases are maintained (patched) 12+ months",
+            "title": "Docker versions"
+        },
+        {
+            "location": "/day-00-workshops/docker-orchestration-workshop/#docker-tools",
+            "text": "Tools such as secrets management, singing of images is Open Source but its pretty hard to setup, hence EE.",
+            "title": "Docker tools"
+        },
+        {
+            "location": "/day-00-workshops/docker-orchestration-workshop/#docker-dns",
+            "text": "Every container at 127.0.0.11 has a DNS server available to it.",
+            "title": "Docker DNS"
+        },
+        {
+            "location": "/day-00-workshops/docker-orchestration-workshop/#docker-security",
+            "text": "Docker by default can be broken out of:   previledge escalation kernel patch required.  Create user, add to Docker group but make sure Docker group and user not privledged.  --security-opts  - app armour and SELinux and you can apply that as one option.  But... app armour with orchestration is really tough.  Looking at pushing up these security controls through capabilities and they translate into SELinux or App Armor in the background.  Don't run  pidhost  or  nethost  - ok for development, but never in prod. Be aware of the risks.  Who's responsible for securing the running of Docker? - Scott thinks SRE, Security and Ops  Who owns the crypto signing? Probably not Ops, probably Sec.  Using runc or containerd directly can reduce a lot of security issues but is more complex to support and implement.  CIS Engine benchmark",
+            "title": "Docker Security"
+        },
+        {
+            "location": "/day-00-workshops/docker-orchestration-workshop/#docker-compose-nuggets",
+            "text": "docker-compose --logs  (many of the same options as  docker logs ) exposes logs for the whole app.  Stacks  only work on Compose v3.1 files and above.  Stacks  only work on Swarm.  Compose is now a way to \"compose\" services that can be deployed with Swarm. The history is confusing. Compose v 3.1 files are the way forward.",
+            "title": "Docker Compose nuggets"
+        },
+        {
+            "location": "/day-00-workshops/docker-orchestration-workshop/#swarm",
+            "text": "Since 1.12  Forget anything before SwarmKit.  Don't put containers on management nodes.  3 nodes is good for most use-cases.  If the root key from the master node is comprimised, you can change the root key on the fly and boot any hacking nodes that joined using the old key. Pretty cool!  Integration with [overlay networks] and [load balancing]  Any node can be a worker or manager but only operational tasks can be done on a manager (operate with  least privledge .  Only ever ONE manager leader at a time. Checks every minute or so.  Docker can snapshot your configuration so you can roll-back.  Docker engine talks to Swarm through the SwarmKit API  Swarm Management: Swarm => Docker CLI => SwarmKit?  Manager node location cannot be discovered from a worker node for security.    TIP: If using Multihoming, you'll need to use  --advertise-addr  to choose.  $ docker swarm init --advertise-addr 10.0.13.3\nSwarm initialized: current node (rkexwo2b2numi48ruj5qmt9et) is now a manager.  To add a worker to this swarm, run the following command:  docker swarm join \\\n--token SWMTKN-1-3n2uiepbd7vy06rsuon8zw36zbk27l9mq0b87s4c5ru1tznyrt-1zlfc48x8mx27uydlg32pvrsy \\\n10.0.13.3:2377    To add a manager to this swarm, run 'docker swarm join-token manager' and follow the instructions.   Two keys: Manager key and Worker key.  docker info  also displays Swarm info.  docker info  displays more Swarm metadata on the manager node but not the worker node.  Kubernetes is a lot more configurable, but a lot more work. Great for managing thousands of nodes or that have complex requiurements.  For most people, Docker Swarm is going to be enough.  Play with Docker is awesome for testing out Swarm as you can create multiple instances.  Under the hood, tokens prevent  MITM attacks",
+            "title": "Swarm"
+        },
+        {
+            "location": "/day-00-workshops/docker-orchestration-workshop/#swarm-issues",
+            "text": "It's probably to do with the KV store as so much information (network, nodes etc), it's all in there.  If you lose all of the manager nodes, the worker nodes will continue to run, but you'll need to create a new cluster with new mangaers and migrate.  Create separate clusters in multiple AZs and have a load balancer manage traffic between them. Advice was to not have Docker swarm manage nodes across different AZ, Kubernetes has the same recommendations.]  If you try to scale up but don't have the resources? An error will be thrown which could be listened for and used to trigger the changing of an autoscale/instance number rule.",
+            "title": "Swarm issues?"
+        },
+        {
+            "location": "/day-00-workshops/docker-orchestration-workshop/#wtf-is-raft",
+            "text": "KV store used for storing of tasks and state.  Docker has built their own Raft implemenetation so SSL is built-in, turned on and performant.  https mesh routing",
+            "title": "WTF is Raft?"
+        },
+        {
+            "location": "/day-00-workshops/docker-orchestration-workshop/#questions-asked",
+            "text": "How do I learn about Linux?  E.g, basic concepts?  How does Docker fit in to architecture? E.g. Serverless and Docker or not Docker?   When do you recommend to your client to  use  Docker containers vs Serverless vs ?  Health check: Swarm can use them but something like Prometheus can then trigger Swarm.  How do Configuration Managment tools fit it with Swarm?\n    CM tools (e.g. Chef/Puppet) configure the artifacts (e.g. VM) but a job/task through a CI/Deployment tool is the thing that will coordinate the deployment and management of resources.",
+            "title": "Questions asked?"
+        },
+        {
+            "location": "/day-00-workshops/docker-orchestration-workshop/#random-insights",
+            "text": "Linux Kit to build specific purpose VMS. In minutes!  Sign and distribute containers. By default! Today!  Easiest way to learn Docker -  Training and Play with Docker",
+            "title": "Random Insights"
+        },
+        {
+            "location": "/day-00-workshops/docker-orchestration-workshop/#random",
+            "text": "tmux (according to Scott) is good (better than screen): Maybe?  https://tmux.github.io/  https://robots.thoughtbot.com/a-tmux-crash-course  https://dominik.honnef.co/posts/2010/10/tmux-vs-screen/  https://superuser.com/questions/236158/tmux-vs-screen  https://brandonwamboldt.ca/tmux-vs-screen-1817/",
+            "title": "Random"
+        },
+        {
+            "location": "/day-00-workshops/brendan-burns-kubernetes-q&a/",
+            "text": "Brendan Burns Kubernetes and Containers Q&A\n\n\nhttps://twitter.com/brendandburns\n\n\nhttps://github.com/brendandburns\n\n\nKubernetes co-founder\n\n\nAzure Cloud Shell\n\nPowershell coming soon which will be Windows Docker containers being orchestrated by Kubernetes.\n\n\nImages need to use labels to indicate architecture (ARM) or OS (Windows) otherwise, the orchestrator.\n\n\nhyper.sh\n\n\nHyper is a Dockerlike API but it launches them inside a Linux hypervisor. Caveat: The cloud doesn't work with nested virtualisation really.\n\n\nSecrets Management\n\n\nWhere does the \ntrust\n come from? It doesn't come from anywhere because someone has to have access somewhere.\n\n\nSecrets File as a RAM disk in case the machine gets comprimised (Similar to Docker Swarm secrets.\n\n\nIt's more about understanding the threat models and mitigating those that matter as much as possible.\n\n\nProblem: Identity and a container. WHO is a container? Who does it run as? What is it allowed to do/get/read/write.\n\n\n\n\nIdentities are more like roles. E.g, a \nfront-end\n (role) identity, not a \nnodejs\n (type) identity.\n\n\n\n\nKubernetes networking\n\n\n\n\nEach container has an IP address. Why?\n\n\nApplication oriented API.\n\n\nUses the Cloud routing API to get a routable IP address for each container. \n\n\nKubernetes namespaces provides isolated networks for containers to talk to each other to.\n\n\n\n\nQuestion: Why Kubernetes vs ECS?\n\n\nManaged    |    Unmanaged\n  < ops      |    > ops\n  < freedom  |    > freedom\n\n\nECS        |    Kubernetes\n  < Lock-in  |    > Freedom\n  < Closed   |    > Open\n\n\nFor AWS:\n\n\n\n\nkops\n\n\nkubeadmin\n\n\n\n\nIs Kubernetes too heavy?\n\n\nQuestion is too simplistic. More configuration up-front yes.\n\n\n\n\nDeis (Heroku style workflow ontop of Kubernetes).\n\n\nHelm: Application package manager.\n\n\n\n\nBridging the old and new worlds\n\n\nNeed to be flexible. E.g. RDMS. Find a way to inject it hostname/ipaddress into your microservices stack so it \"seems\" like its from the new world, its not. \n\n\nWe should stop bashing those who create \"fat\" containers. This is the real world and not everyone can or is converting their systems to microservices.\n\n\nWe need to be accepting of everyones unique circumstances, skills and constraints and simply help them embrace Docker where it makese sense and as best they can.\n\n\nServerless vs Functions As a Service (FAAS)\n\n\nIs serverless when you don't care about the machine, host. In that way, Docker can be a form of serverless architecture.\n\n\nFAAS in the future might simply be a certain type of application deployed via a container orchestrator.\n\n\nAs scale increases, Lambda run per request at 1,000's of requests per seecond isn't neccesarily cheaper. No silver bullet.\n\n\nBut managing a very specific action as a result of a request from say a webhook is a great idea, but it doesn't have to be on Lambda.\n\n\nShould we be automating everything?\n\n\nYes. More from the point of view it forces you to ensure that everything is thoroughly tested, bullet-proof and has thought about all the different things that can go wrong.\n\n\nHow to learn Kubenetes?\n\n\nkubectrl\n doesn't help. It helps you get Kubenetes deployed and up and running quickly and more easily, but all it does is hide details from you that you must now before you go to production.\n\n\nNoOps. Is it real?\n\n\nNo.\n\n\nWhat is happening though, is that the coupling between the application/workload and the host OS is being severed.\n\n\nSo perhaps \nLessOps\n is a better term.\n\n\nNo matter what, we now have lots of different \"Ops\" to care about now:\n\n\n\n\nAppOps\n\n\nSecOps\n\n\nClusterOps\n\n\nSysOps\n\n\nNetOps\n\n\nStorageOps\n\n\nKernelOps\n\n\nData/Backup Ops\n\n\nChatOps\n\n\n\n\nSo the ability to be clear about responsibilities and how teams hand-off and work together (not just blame each other) is so important.\n\n\nWriting tutorials and great docs is a crucial skill these days as the surface-area of concepts grows exponentially.\n\n\nWhat's the next killer feature for Kubernetes\n\n\n\n\nEventing \n\n\nIdentity, Pod level identity\n\n\nSlowing down and stopping adding new APIs.\n\n\nBetter user guides to help people learn how Kubernetes works, not just hiding the details with \nkubectl\n.",
+            "title": "Brandan Burns Q&A"
+        },
+        {
+            "location": "/day-00-workshops/brendan-burns-kubernetes-q&a/#brendan-burns-kubernetes-and-containers-qa",
+            "text": "https://twitter.com/brendandburns  https://github.com/brendandburns  Kubernetes co-founder  Azure Cloud Shell \nPowershell coming soon which will be Windows Docker containers being orchestrated by Kubernetes.  Images need to use labels to indicate architecture (ARM) or OS (Windows) otherwise, the orchestrator.",
+            "title": "Brendan Burns Kubernetes and Containers Q&amp;A"
+        },
+        {
+            "location": "/day-00-workshops/brendan-burns-kubernetes-q&a/#hypersh",
+            "text": "Hyper is a Dockerlike API but it launches them inside a Linux hypervisor. Caveat: The cloud doesn't work with nested virtualisation really.",
+            "title": "hyper.sh"
+        },
+        {
+            "location": "/day-00-workshops/brendan-burns-kubernetes-q&a/#secrets-management",
+            "text": "Where does the  trust  come from? It doesn't come from anywhere because someone has to have access somewhere.  Secrets File as a RAM disk in case the machine gets comprimised (Similar to Docker Swarm secrets.  It's more about understanding the threat models and mitigating those that matter as much as possible.  Problem: Identity and a container. WHO is a container? Who does it run as? What is it allowed to do/get/read/write.   Identities are more like roles. E.g, a  front-end  (role) identity, not a  nodejs  (type) identity.",
+            "title": "Secrets Management"
+        },
+        {
+            "location": "/day-00-workshops/brendan-burns-kubernetes-q&a/#kubernetes-networking",
+            "text": "Each container has an IP address. Why?  Application oriented API.  Uses the Cloud routing API to get a routable IP address for each container.   Kubernetes namespaces provides isolated networks for containers to talk to each other to.",
+            "title": "Kubernetes networking"
+        },
+        {
+            "location": "/day-00-workshops/brendan-burns-kubernetes-q&a/#question-why-kubernetes-vs-ecs",
+            "text": "Managed    |    Unmanaged\n  < ops      |    > ops\n  < freedom  |    > freedom  ECS        |    Kubernetes\n  < Lock-in  |    > Freedom\n  < Closed   |    > Open",
+            "title": "Question: Why Kubernetes vs ECS?"
+        },
+        {
+            "location": "/day-00-workshops/brendan-burns-kubernetes-q&a/#for-aws",
+            "text": "kops  kubeadmin",
+            "title": "For AWS:"
+        },
+        {
+            "location": "/day-00-workshops/brendan-burns-kubernetes-q&a/#is-kubernetes-too-heavy",
+            "text": "Question is too simplistic. More configuration up-front yes.   Deis (Heroku style workflow ontop of Kubernetes).  Helm: Application package manager.",
+            "title": "Is Kubernetes too heavy?"
+        },
+        {
+            "location": "/day-00-workshops/brendan-burns-kubernetes-q&a/#bridging-the-old-and-new-worlds",
+            "text": "Need to be flexible. E.g. RDMS. Find a way to inject it hostname/ipaddress into your microservices stack so it \"seems\" like its from the new world, its not.   We should stop bashing those who create \"fat\" containers. This is the real world and not everyone can or is converting their systems to microservices.  We need to be accepting of everyones unique circumstances, skills and constraints and simply help them embrace Docker where it makese sense and as best they can.",
+            "title": "Bridging the old and new worlds"
+        },
+        {
+            "location": "/day-00-workshops/brendan-burns-kubernetes-q&a/#serverless-vs-functions-as-a-service-faas",
+            "text": "Is serverless when you don't care about the machine, host. In that way, Docker can be a form of serverless architecture.  FAAS in the future might simply be a certain type of application deployed via a container orchestrator.  As scale increases, Lambda run per request at 1,000's of requests per seecond isn't neccesarily cheaper. No silver bullet.  But managing a very specific action as a result of a request from say a webhook is a great idea, but it doesn't have to be on Lambda.",
+            "title": "Serverless vs Functions As a Service (FAAS)"
+        },
+        {
+            "location": "/day-00-workshops/brendan-burns-kubernetes-q&a/#should-we-be-automating-everything",
+            "text": "Yes. More from the point of view it forces you to ensure that everything is thoroughly tested, bullet-proof and has thought about all the different things that can go wrong.",
+            "title": "Should we be automating everything?"
+        },
+        {
+            "location": "/day-00-workshops/brendan-burns-kubernetes-q&a/#how-to-learn-kubenetes",
+            "text": "kubectrl  doesn't help. It helps you get Kubenetes deployed and up and running quickly and more easily, but all it does is hide details from you that you must now before you go to production.",
+            "title": "How to learn Kubenetes?"
+        },
+        {
+            "location": "/day-00-workshops/brendan-burns-kubernetes-q&a/#noops-is-it-real",
+            "text": "No.  What is happening though, is that the coupling between the application/workload and the host OS is being severed.  So perhaps  LessOps  is a better term.  No matter what, we now have lots of different \"Ops\" to care about now:   AppOps  SecOps  ClusterOps  SysOps  NetOps  StorageOps  KernelOps  Data/Backup Ops  ChatOps   So the ability to be clear about responsibilities and how teams hand-off and work together (not just blame each other) is so important.  Writing tutorials and great docs is a crucial skill these days as the surface-area of concepts grows exponentially.",
+            "title": "NoOps. Is it real?"
+        },
+        {
+            "location": "/day-00-workshops/brendan-burns-kubernetes-q&a/#whats-the-next-killer-feature-for-kubernetes",
+            "text": "Eventing   Identity, Pod level identity  Slowing down and stopping adding new APIs.  Better user guides to help people learn how Kubernetes works, not just hiding the details with  kubectl .",
+            "title": "What's the next killer feature for Kubernetes"
+        },
+        {
+            "location": "/day-01/brendan-burns-container-past-future/",
+            "text": "Container Journey: Past, Present, and Future\n\n\nBrendan Burns, Microsoft Azure\n@brendandburns\n\n\nContainers are cool, but...\n\n\nYou shouldn't really care about containers, microservices etc.\n\n\nYou \nshould\n care about a quality product, your users and customers, your team.\n\n\nContainers and container technology simply enable you to do a better job of doing the things you care about for who you care about.\n\n\nWhat may have been an awesome bash script that only worked on Debian 2 years ago, now can be packaged into a container and available to anyone running containers.\n\n\nWhy did containers take off?\n\n\n\n\nIt was the ultimate way to package your (largely) application irrespective of the environment in which it would run.\n\n\nIt fitted the CI/CD model beautifully but made it fly with quicker and smaller artefacts.\n\n\n\n\nPositive impacts\n\n\nBecause a container IS NOT a VM, it forced Devs and Ops to carefully think about the boundaries between the container and the host. \"What should be in this thing\" forced conversations to happen earlier in the development and deployment process.\n\n\nDependency isolation\n\n\nFreeing the application from caring about what else is on the machine.\n\n\nWe need an orchestrator\n\n\nMoved the orchestration concern from the cloud vendor to the software level\n\n\nWhy do you need an orchestrator? O(N) = O(1) Run (n) things at the same cost as (1) things.\n\n\nOrchestration benefits\n\n\n\n\nIf a container dies or is unhealthy, the orchestrator self heals without the developer of the app/container writing any code.\n\n\nScale up and down with a command or configure auto-scaling (although orchestrators \nshould not\n be cloud API aware.)\n\n\n\n\nKubernetes - Services\n\n\n\n\nServices provide load balancers at every tier of your stack so you can individually scale and manage each service individually. \n\n\nNot just about running containers, but running services and isolating them from one another.\n\n\nAs we're now de-coupled from the machine, the machine used to be the identity (e.g. db-1).\n\n\nServices now give us a way to identify the parts of our system, but we don't want to name the containers, we want to name the services, the parts of our system.\n\n\nThis all fits beautifully with microservices architecture which explains why Docker, Orchestrators and Microservices have fuelled the growth of each other.\n\n\n\n\nWe are we at with Container Orchestration? The commoditisation phase\n\n\n\n\nIt's a commodity. Spin up a complex cluster in 1 or maybe 2 commands.\n\n\nThe price is in the price of the compute power, not in the orchestration software.\n\n\nContainers mark the first real version of \"cloud native\" architecture. \n\n\nWhile VM's gave us \nquicker\n access to a machine, containers changes how companies will build PaaS and make it affordable and approachable for smaller and niche players to compete with larger vendors due to the commoditising of things such as deployment, packaging, load balancing, distributing load. \n\n\nWith container orchestration, a Heroku \nstyle\n workflow is now approachable for teams of all sizes.\n\n\n\n\nThis also commoditises many of the services offered by cloud companies as the cloud vendor APIs and capabilities matters, less. All that matters is that it can run the orchestrator well.\n\n\nThe future\n\n\n\n\nEasier to get started (not teach best practices, they are there by default (e.g. restart if crash), automate more, self-heal, standard patterns (health checks).\n\n\nBuilding distributed systems as a standard application design pattern.\n\n\nDistributed systems are or are becoming microservices.\n\n\n\n\nWe need the right stuff done by default\n\n\n\n\nLogging\n\n\nMonitoring\n\n\nSecurity\n\n\n\n\nHelp people fall into the pit of success and spend time on making a great product, not arguing about which monitoring, or worse, live debugging in production because monitoring doesn't exist and production is down.\n\n\nLets take monitoring\n\n\n\n\nstatsd\n\n\nPrometheus\n\n\nIsn't that what logs are for? (no monitoring)\n\n\n\n\nOrchestrators should have really good built-in monitoring.\n\n\nCustomised monitoring solutions should integrate natively into the orchestration solution at the service/cluster layer so the implementation so that monitoring is implemented the same way for each cluster/service every time.\ntime every timeevery timeevery timeevery timeevery timeevery timeevery timeevery timeevery timeevery time every\n\n\nKubernetes and Third party APIs\n\n\nWe need to move to a more explicit way to describe our environment while working within the extensibility constraints of orchestration tools.\n\n\nYou can now declare \nnew types\n (e.g. Load Test Extension API):\n\n\n\n\nRegisters a new API URI for requesting load tests.\n\n\nAlso watches for the deployment of new versions of specific applications.\n\n\nRuns a load test on demand perhaps as part of the blue-green deployment process to ensure that the service is truly ready for production traffic.\n\n\n\n\nCool links\n\n\n\n\nKubeless\n \u2013 Serverless Framework for Kubernetes.\n\n\nHelm\n - The Kubernetes Package Manager\n\n\nkube-lego\n - Kube-Lego automatically requests certificates for Kubernetes Ingress resources from Let's Encrypt\n\n\nDeis, Inc\n - The Kubernetes Company",
+            "title": "Container Journey Past, Present, and Future"
+        },
+        {
+            "location": "/day-01/brendan-burns-container-past-future/#container-journey-past-present-and-future",
+            "text": "Brendan Burns, Microsoft Azure\n@brendandburns",
+            "title": "Container Journey: Past, Present, and Future"
+        },
+        {
+            "location": "/day-01/brendan-burns-container-past-future/#containers-are-cool-but",
+            "text": "You shouldn't really care about containers, microservices etc.  You  should  care about a quality product, your users and customers, your team.  Containers and container technology simply enable you to do a better job of doing the things you care about for who you care about.  What may have been an awesome bash script that only worked on Debian 2 years ago, now can be packaged into a container and available to anyone running containers.",
+            "title": "Containers are cool, but..."
+        },
+        {
+            "location": "/day-01/brendan-burns-container-past-future/#why-did-containers-take-off",
+            "text": "It was the ultimate way to package your (largely) application irrespective of the environment in which it would run.  It fitted the CI/CD model beautifully but made it fly with quicker and smaller artefacts.",
+            "title": "Why did containers take off?"
+        },
+        {
+            "location": "/day-01/brendan-burns-container-past-future/#positive-impacts",
+            "text": "Because a container IS NOT a VM, it forced Devs and Ops to carefully think about the boundaries between the container and the host. \"What should be in this thing\" forced conversations to happen earlier in the development and deployment process.",
+            "title": "Positive impacts"
+        },
+        {
+            "location": "/day-01/brendan-burns-container-past-future/#dependency-isolation",
+            "text": "Freeing the application from caring about what else is on the machine.",
+            "title": "Dependency isolation"
+        },
+        {
+            "location": "/day-01/brendan-burns-container-past-future/#we-need-an-orchestrator",
+            "text": "Moved the orchestration concern from the cloud vendor to the software level  Why do you need an orchestrator? O(N) = O(1) Run (n) things at the same cost as (1) things.",
+            "title": "We need an orchestrator"
+        },
+        {
+            "location": "/day-01/brendan-burns-container-past-future/#orchestration-benefits",
+            "text": "If a container dies or is unhealthy, the orchestrator self heals without the developer of the app/container writing any code.  Scale up and down with a command or configure auto-scaling (although orchestrators  should not  be cloud API aware.)",
+            "title": "Orchestration benefits"
+        },
+        {
+            "location": "/day-01/brendan-burns-container-past-future/#kubernetes-services",
+            "text": "Services provide load balancers at every tier of your stack so you can individually scale and manage each service individually.   Not just about running containers, but running services and isolating them from one another.  As we're now de-coupled from the machine, the machine used to be the identity (e.g. db-1).  Services now give us a way to identify the parts of our system, but we don't want to name the containers, we want to name the services, the parts of our system.  This all fits beautifully with microservices architecture which explains why Docker, Orchestrators and Microservices have fuelled the growth of each other.",
+            "title": "Kubernetes - Services"
+        },
+        {
+            "location": "/day-01/brendan-burns-container-past-future/#we-are-we-at-with-container-orchestration-the-commoditisation-phase",
+            "text": "It's a commodity. Spin up a complex cluster in 1 or maybe 2 commands.  The price is in the price of the compute power, not in the orchestration software.  Containers mark the first real version of \"cloud native\" architecture.   While VM's gave us  quicker  access to a machine, containers changes how companies will build PaaS and make it affordable and approachable for smaller and niche players to compete with larger vendors due to the commoditising of things such as deployment, packaging, load balancing, distributing load.   With container orchestration, a Heroku  style  workflow is now approachable for teams of all sizes.   This also commoditises many of the services offered by cloud companies as the cloud vendor APIs and capabilities matters, less. All that matters is that it can run the orchestrator well.",
+            "title": "We are we at with Container Orchestration? The commoditisation phase"
+        },
+        {
+            "location": "/day-01/brendan-burns-container-past-future/#the-future",
+            "text": "Easier to get started (not teach best practices, they are there by default (e.g. restart if crash), automate more, self-heal, standard patterns (health checks).  Building distributed systems as a standard application design pattern.  Distributed systems are or are becoming microservices.",
+            "title": "The future"
+        },
+        {
+            "location": "/day-01/brendan-burns-container-past-future/#we-need-the-right-stuff-done-by-default",
+            "text": "Logging  Monitoring  Security   Help people fall into the pit of success and spend time on making a great product, not arguing about which monitoring, or worse, live debugging in production because monitoring doesn't exist and production is down.",
+            "title": "We need the right stuff done by default"
+        },
+        {
+            "location": "/day-01/brendan-burns-container-past-future/#lets-take-monitoring",
+            "text": "statsd  Prometheus  Isn't that what logs are for? (no monitoring)   Orchestrators should have really good built-in monitoring.  Customised monitoring solutions should integrate natively into the orchestration solution at the service/cluster layer so the implementation so that monitoring is implemented the same way for each cluster/service every time.\ntime every timeevery timeevery timeevery timeevery timeevery timeevery timeevery timeevery timeevery time every",
+            "title": "Lets take monitoring"
+        },
+        {
+            "location": "/day-01/brendan-burns-container-past-future/#kubernetes-and-third-party-apis",
+            "text": "We need to move to a more explicit way to describe our environment while working within the extensibility constraints of orchestration tools.  You can now declare  new types  (e.g. Load Test Extension API):   Registers a new API URI for requesting load tests.  Also watches for the deployment of new versions of specific applications.  Runs a load test on demand perhaps as part of the blue-green deployment process to ensure that the service is truly ready for production traffic.",
+            "title": "Kubernetes and Third party APIs"
+        },
+        {
+            "location": "/day-01/brendan-burns-container-past-future/#cool-links",
+            "text": "Kubeless  \u2013 Serverless Framework for Kubernetes.  Helm  - The Kubernetes Package Manager  kube-lego  - Kube-Lego automatically requests certificates for Kubernetes Ingress resources from Let's Encrypt  Deis, Inc  - The Kubernetes Company",
+            "title": "Cool links"
+        },
+        {
+            "location": "/day-01/kubernetes-meets-linux/",
+            "text": "Linux meets Kubernetes\n\n\nVishnu Kannan\n\n\nhttps://www.linkedin.com/in/vishnukanan\n\n\nhttps://github.com/vishh?tab=repositories\n\n\nOverview\n\n\n\n\nMaster node and worker nodes\n\n\nContainers enable you to focus more on your application and less on where it runs.\n\n\nKubernetes does not use Docker, but uses parts of the Moby project (e.g. runc).\n\n\n\n\nThe anatomy of a running Docker container\n\n\n\n\nOverlay (type) filesystem (copy-on-write)\n\n\nControl groups (cgroups): Restrict resources, track processes\n\n\nNamespaces (virtual context, process trees, network interfaces, users and groups, mounted filesystems).\n\n\nSecurity: Seccomp, Capabilities, AppArmor, SELinux, Filesystem permissions. Provide least privilege.\n\n\nVolumes: Simply any data that \nis not\n within your overlay file system. Allows data used by your container to live beyond the life of the container.\n\n\nNetwork: Bridge + Veth + Iptables, Overlay and Underlay, eth0 and loopback.\n\n\n\n\nPods\n\n\nNow that we all have a common understanding of a container, what is a pod?\n\n\nOne or more tightly coupled containers and volumes.\n\n\nPods let you build microservices:\n\n\n\n\nShared Linux namespace.\n\n\nShared storage.\n\n\nShared network interface.\n\n\nShared control groups.\n\n\n\n\nDemo\n\n\nCode: Github (will update when I know the repo)\n\n\nMy side-notes\n\n\nMy opinionated and supposed insights, not what Vish said.\n\n\nWe need to get better at explaining what is:\n\n\n\n\nImage\n\n\nContainer\n\n\nDocker\n\n\nDocker Inc.\n\n\nMoby\n\n\n\n\nFor example, a Debian Docker container does not have a Debian built Linux kernel, it is utilising the kernel from the host. All a Debian image is, is a subset of the binaries and file system structure of Debian.\n\n\nA Docker orchestration journey\n\n\nWe need to help the community understand:\n\n\n\n\nThe different orchestrators.\n\n\nWhich ones fit which purpose.\n\n\nHow to move from simpler (Docker Swarm, ECS) to more powerful (Kubernetes) and how to translate the learnings so it doesn't feel like they've learnt two different orchestrators.\n\n\n\n\nCool links\n\n\n\n\nunshare\n\n\nCNI",
+            "title": "Kubernetes meets Linux"
+        },
+        {
+            "location": "/day-01/kubernetes-meets-linux/#linux-meets-kubernetes",
+            "text": "Vishnu Kannan  https://www.linkedin.com/in/vishnukanan  https://github.com/vishh?tab=repositories",
+            "title": "Linux meets Kubernetes"
+        },
+        {
+            "location": "/day-01/kubernetes-meets-linux/#overview",
+            "text": "Master node and worker nodes  Containers enable you to focus more on your application and less on where it runs.  Kubernetes does not use Docker, but uses parts of the Moby project (e.g. runc).",
+            "title": "Overview"
+        },
+        {
+            "location": "/day-01/kubernetes-meets-linux/#the-anatomy-of-a-running-docker-container",
+            "text": "Overlay (type) filesystem (copy-on-write)  Control groups (cgroups): Restrict resources, track processes  Namespaces (virtual context, process trees, network interfaces, users and groups, mounted filesystems).  Security: Seccomp, Capabilities, AppArmor, SELinux, Filesystem permissions. Provide least privilege.  Volumes: Simply any data that  is not  within your overlay file system. Allows data used by your container to live beyond the life of the container.  Network: Bridge + Veth + Iptables, Overlay and Underlay, eth0 and loopback.",
+            "title": "The anatomy of a running Docker container"
+        },
+        {
+            "location": "/day-01/kubernetes-meets-linux/#pods",
+            "text": "Now that we all have a common understanding of a container, what is a pod?  One or more tightly coupled containers and volumes.  Pods let you build microservices:   Shared Linux namespace.  Shared storage.  Shared network interface.  Shared control groups.",
+            "title": "Pods"
+        },
+        {
+            "location": "/day-01/kubernetes-meets-linux/#demo",
+            "text": "Code: Github (will update when I know the repo)",
+            "title": "Demo"
+        },
+        {
+            "location": "/day-01/kubernetes-meets-linux/#my-side-notes",
+            "text": "My opinionated and supposed insights, not what Vish said.",
+            "title": "My side-notes"
+        },
+        {
+            "location": "/day-01/kubernetes-meets-linux/#we-need-to-get-better-at-explaining-what-is",
+            "text": "Image  Container  Docker  Docker Inc.  Moby   For example, a Debian Docker container does not have a Debian built Linux kernel, it is utilising the kernel from the host. All a Debian image is, is a subset of the binaries and file system structure of Debian.",
+            "title": "We need to get better at explaining what is:"
+        },
+        {
+            "location": "/day-01/kubernetes-meets-linux/#a-docker-orchestration-journey",
+            "text": "We need to help the community understand:   The different orchestrators.  Which ones fit which purpose.  How to move from simpler (Docker Swarm, ECS) to more powerful (Kubernetes) and how to translate the learnings so it doesn't feel like they've learnt two different orchestrators.",
+            "title": "A Docker orchestration journey"
+        },
+        {
+            "location": "/day-01/kubernetes-meets-linux/#cool-links",
+            "text": "unshare  CNI",
+            "title": "Cool links"
+        },
+        {
+            "location": "/day-01/containers-from-scratch-the sequel/",
+            "text": "Containers from scratch - the sequel\n\n\nLiz Rice\n\n\n@LizRice\n\n\nhttps://github.com/lizrice/\n\n\nOverview\n\n\nWhat containers are through a different lense.\n\n\nNot a security talk or talking about AcquaSec (yay for Vendor not plugging their product during their talk).\n\n\nLet's build a simple container runtime in Go in less than 100 loc.\n\n\n\n\nNamespaes.\n\n\nRootless containers.\n\n\nCgroups.\n\n\nFork bomb.\n\n\n\n\nReplicate Docker run in go\n\n\nCheckout the code",
+            "title": "Containers from scratch - the sequel"
+        },
+        {
+            "location": "/day-01/containers-from-scratch-the sequel/#containers-from-scratch-the-sequel",
+            "text": "Liz Rice  @LizRice  https://github.com/lizrice/",
+            "title": "Containers from scratch - the sequel"
+        },
+        {
+            "location": "/day-01/containers-from-scratch-the sequel/#overview",
+            "text": "What containers are through a different lense.  Not a security talk or talking about AcquaSec (yay for Vendor not plugging their product during their talk).  Let's build a simple container runtime in Go in less than 100 loc.   Namespaes.  Rootless containers.  Cgroups.  Fork bomb.",
+            "title": "Overview"
+        },
+        {
+            "location": "/day-01/containers-from-scratch-the sequel/#replicate-docker-run-in-go",
+            "text": "Checkout the code",
+            "title": "Replicate Docker run in go"
+        },
+        {
+            "location": "/day-01/kubernetes-rise-serverless/",
+            "text": "Kubernetes and the rise of Serverless\n\n\nAngus Lees\n - Bitnami\n\n\nWhy\n\n\nGoogle was using containers over 10 years ago so for them, it's boring technology.\n\n\nDrive towards the future of boring features that are sharable (e.g. image thumbnail creation) at scale.\n\n\nWhat\n\n\n\n\nPre-packaged K8s stack (Helm Charts)\n\n\nkubecfg, kompose\n\n\nStacksmith (images)\n\n\nFunctions-as-a-Service (kubeless)\n\n\n\n\nUse case\n\n\n\"I want a webhook that lievs alongside my app\".\n\n\nQuestions:\n\n\n\n\nWhere should it live? \n\n\nWho should know about it?\n\n\nWho maintains it?\n\n\n\n\nIf the answer right now is \"in my app/middleware framework\", its a lot of work for a potentially small amount of return.\n\n\nE.g. Thumbnail creation on image upload.\n\n\nKubeless\n\n\nDesigned for the \"simple 20 line\" jobs.\n\n\nNOT designed for the \"massive instant scale\" use-case.\n\n\nNOT for plug-in/event based architecture integrated into cloud vendor APIs.\n\n\nCAN be for consuming Kubernetes events though. Comes back to Brandan Burns' comments that Kubernetes deployments need to get better at being \"event driven\".\n\n\n\n\nSimple by design.\n\n\nNode.js, Python Ruby and more on the way.\n\n\nGet Prometheus metrics, error handling etc for free via runtime.\n\n\nGet as much from native Kubenetes as possible.\n\n\n\n\nThird party resource so can also be used from kubectl\n\n\nCool Links\n\n\n\n\nkubeless-ui\n (GUI for Kubeless)",
+            "title": "Kubernetes and the rise of Serverless"
+        },
+        {
+            "location": "/day-01/kubernetes-rise-serverless/#kubernetes-and-the-rise-of-serverless",
+            "text": "Angus Lees  - Bitnami",
+            "title": "Kubernetes and the rise of Serverless"
+        },
+        {
+            "location": "/day-01/kubernetes-rise-serverless/#why",
+            "text": "Google was using containers over 10 years ago so for them, it's boring technology.  Drive towards the future of boring features that are sharable (e.g. image thumbnail creation) at scale.",
+            "title": "Why"
+        },
+        {
+            "location": "/day-01/kubernetes-rise-serverless/#what",
+            "text": "Pre-packaged K8s stack (Helm Charts)  kubecfg, kompose  Stacksmith (images)  Functions-as-a-Service (kubeless)",
+            "title": "What"
+        },
+        {
+            "location": "/day-01/kubernetes-rise-serverless/#use-case",
+            "text": "\"I want a webhook that lievs alongside my app\".  Questions:   Where should it live?   Who should know about it?  Who maintains it?   If the answer right now is \"in my app/middleware framework\", its a lot of work for a potentially small amount of return.  E.g. Thumbnail creation on image upload.",
+            "title": "Use case"
+        },
+        {
+            "location": "/day-01/kubernetes-rise-serverless/#kubeless",
+            "text": "Designed for the \"simple 20 line\" jobs.  NOT designed for the \"massive instant scale\" use-case.  NOT for plug-in/event based architecture integrated into cloud vendor APIs.  CAN be for consuming Kubernetes events though. Comes back to Brandan Burns' comments that Kubernetes deployments need to get better at being \"event driven\".   Simple by design.  Node.js, Python Ruby and more on the way.  Get Prometheus metrics, error handling etc for free via runtime.  Get as much from native Kubenetes as possible.   Third party resource so can also be used from kubectl",
+            "title": "Kubeless"
+        },
+        {
+            "location": "/day-01/kubernetes-rise-serverless/#cool-links",
+            "text": "kubeless-ui  (GUI for Kubeless)",
+            "title": "Cool Links"
+        },
+        {
+            "location": "/day-01/oci/",
+            "text": "OCI and Open Container Standards\n\n\nJonathan Boulle\n\n\nNStack\n\n\n@baronboulle\n\n\nWhat is OCI?\n\n\nStands for Open Containers Initiative.\n\n\nDocker did a great job of holding the container commnity together during the last three years. Net result is the \nMoby project\n which provides open source container tools for everyone.\n\n\nIts just standards for container runtime and container image format (not the official definition).\n\n\n\n\nOCI Image spec\n\n\nOCI Runtime spec\n\n\n\n\nWhat doesn't hold true about the shipping container metaphor?\n\n\n\n\nYou actually \ndo\n care whats inside it.\n\n\nYou need to know about the contents of the container in order to use it.\n\n\n\n\nPerhaps we could help the metaphor along by adding a \"shipping manifest\"?\n\n\nBut there are more problems:\n\n\n\n\nShipping containers are fixed size (volume)\n\n\nShipping containers are essenetially state machines:\n\n\nbuilt.\n\n\nempty.\n\n\npacked.\n\n\nshipped.\n\n\nun-packed.\n\n\n\n\n\n\n\n\nBottom line is that physical metaphors never map well to computing concepts.\n\n\nThe quest for a better metaphor\n\n\nChees-cake? No.\n\n\nIKEA furniture instrctions? Getting closer.\n\n\nFinally... Baron arrives at the Piola.\n\n\nWhile I agree that using the piola and music is a much more robust metaphor, the problem is that many people won't know what the piola is!\n\n\nIf they don't, now they have to learn that first, hence it could be more of a barrier of entry to understanding what a \ncontainer\n in software when using that as the metaphor.\n\n\nI think this might be one of those examples where \"practicality beats purity\" and although the shipping container metaphor is far from perfect and Baron's choice of the Piola is indeed \nbetter\n, it's may not be as effective.\n\n\nI really appreciate the focus on improving the metaphor\n\n\nThis is one of the less sexy problems to try and take on and I really commend Baron for coming up with a much more air-tight metaphor for explaining containers.\n\n\nHow we communicate concepts to people learning things for the first time is a really important thing to focus on.\n\n\nOCI Image format\n\n\nTakes the Dockerfile v2.2 and aims to standardise from this point on:\n\n\nAnatomy:\n\n\n\n\nlayers\n\n\nimage index\n\n\nconfig\n\n\n\n\nOn disklayout of the container:\n\n\n\n\nExtracted file system of the image on the host.\n\n\nState managemet: create, start, kill, delete, state.\n\n\nEncourage platform agnostic support.",
+            "title": "OCI and Open Container Standards"
+        },
+        {
+            "location": "/day-01/oci/#oci-and-open-container-standards",
+            "text": "Jonathan Boulle  NStack  @baronboulle",
+            "title": "OCI and Open Container Standards"
+        },
+        {
+            "location": "/day-01/oci/#what-is-oci",
+            "text": "Stands for Open Containers Initiative.  Docker did a great job of holding the container commnity together during the last three years. Net result is the  Moby project  which provides open source container tools for everyone.  Its just standards for container runtime and container image format (not the official definition).   OCI Image spec  OCI Runtime spec",
+            "title": "What is OCI?"
+        },
+        {
+            "location": "/day-01/oci/#what-doesnt-hold-true-about-the-shipping-container-metaphor",
+            "text": "You actually  do  care whats inside it.  You need to know about the contents of the container in order to use it.   Perhaps we could help the metaphor along by adding a \"shipping manifest\"?  But there are more problems:   Shipping containers are fixed size (volume)  Shipping containers are essenetially state machines:  built.  empty.  packed.  shipped.  un-packed.     Bottom line is that physical metaphors never map well to computing concepts.",
+            "title": "What doesn't hold true about the shipping container metaphor?"
+        },
+        {
+            "location": "/day-01/oci/#the-quest-for-a-better-metaphor",
+            "text": "Chees-cake? No.  IKEA furniture instrctions? Getting closer.  Finally... Baron arrives at the Piola.  While I agree that using the piola and music is a much more robust metaphor, the problem is that many people won't know what the piola is!  If they don't, now they have to learn that first, hence it could be more of a barrier of entry to understanding what a  container  in software when using that as the metaphor.  I think this might be one of those examples where \"practicality beats purity\" and although the shipping container metaphor is far from perfect and Baron's choice of the Piola is indeed  better , it's may not be as effective.",
+            "title": "The quest for a better metaphor"
+        },
+        {
+            "location": "/day-01/oci/#i-really-appreciate-the-focus-on-improving-the-metaphor",
+            "text": "This is one of the less sexy problems to try and take on and I really commend Baron for coming up with a much more air-tight metaphor for explaining containers.  How we communicate concepts to people learning things for the first time is a really important thing to focus on.",
+            "title": "I really appreciate the focus on improving the metaphor"
+        },
+        {
+            "location": "/day-01/oci/#oci-image-format",
+            "text": "Takes the Dockerfile v2.2 and aims to standardise from this point on:  Anatomy:   layers  image index  config   On disklayout of the container:   Extracted file system of the image on the host.  State managemet: create, start, kill, delete, state.  Encourage platform agnostic support.",
+            "title": "OCI Image format"
+        },
+        {
+            "location": "/day-02/orchestrating-least-privilege/",
+            "text": "Orchestrating Least Privilege\n\n\nDiogo M\u00f3nica - Docker\n\n\n@diogomonica\n\n\nWhat is least privilege\n\n\nOrchestrator that follows the principle of least privilege in the best way possible.\n\n\nWhy least privilege?\n\n\nDesign your architecture and applications in a way so you can withstand attackes.\n\n\nTypes of attacks\n\n\n\n\nExternal (e.g. outside firewall)\n\n\nInternal (already has access to internal network)\n\n\nPassive Listener Attacker (listing and everything)\n\n\nMalicous Worker attacker (worker node comprimised)\n\n\nMalicious Manager Attacker (orchestrator comprimised)\n\n\n\n\nWhere are we at with Orchestrator Security?\n\n\n\n\nNot a single purpose musician, but a street perfomer that does ever.\n\n\n\n\nHow to mitigate attackers\n\n\nExternal\n\n\n\n\nWhitelist (e.g. ports), not blacklist\n\n\nFinely tuned access control (only the web-service can access the payment processing service)\n\n\nYour applications should encrypt communication between systems (microservices, db)\n\n\n\n\nMitigating Malicous Worker\n\n\nIf a worker is comprimised, no info is available to comprimise the manager.\n\n\nMitigating Malicous MAnager\n\n\nThe workers do not \nblindly\n trust the manager. E.g, checking signed images to ensure they are what they're meant to be.\n\n\nHow is Swarm executing least privilege?\n\n\n\n\nMutual TLS by default. When you start a Swarm cluster, generates a new self-signed CA cert.\n\n\nNew nodes get certificates created (and rotated) and setup for free just by running Swarm.\n\n\nSwarm ensures that nodes communicate over TLS always. \n\n\nSecure by default.\n\n\n\n\nHow does Swarm does secrets?\n\n\n\n\nWorkers only delivered the secrets they need from a manager.\n\n\nSecrets are encrypted on the worker node (encrypted at rest) in a RAM disk (memory but on file system).\n\n\nWorks to least privilege as workers only get what they need. No secrets needed? No secrets given.\n\n\nWhen a container is removed from a node, the secrets are removed from memory as well.",
+            "title": "Orchestrating Least Privilege"
+        },
+        {
+            "location": "/day-02/orchestrating-least-privilege/#orchestrating-least-privilege",
+            "text": "Diogo M\u00f3nica - Docker  @diogomonica",
+            "title": "Orchestrating Least Privilege"
+        },
+        {
+            "location": "/day-02/orchestrating-least-privilege/#what-is-least-privilege",
+            "text": "Orchestrator that follows the principle of least privilege in the best way possible.",
+            "title": "What is least privilege"
+        },
+        {
+            "location": "/day-02/orchestrating-least-privilege/#why-least-privilege",
+            "text": "Design your architecture and applications in a way so you can withstand attackes.",
+            "title": "Why least privilege?"
+        },
+        {
+            "location": "/day-02/orchestrating-least-privilege/#types-of-attacks",
+            "text": "External (e.g. outside firewall)  Internal (already has access to internal network)  Passive Listener Attacker (listing and everything)  Malicous Worker attacker (worker node comprimised)  Malicious Manager Attacker (orchestrator comprimised)",
+            "title": "Types of attacks"
+        },
+        {
+            "location": "/day-02/orchestrating-least-privilege/#where-are-we-at-with-orchestrator-security",
+            "text": "Not a single purpose musician, but a street perfomer that does ever.",
+            "title": "Where are we at with Orchestrator Security?"
+        },
+        {
+            "location": "/day-02/orchestrating-least-privilege/#how-to-mitigate-attackers",
+            "text": "",
+            "title": "How to mitigate attackers"
+        },
+        {
+            "location": "/day-02/orchestrating-least-privilege/#external",
+            "text": "Whitelist (e.g. ports), not blacklist  Finely tuned access control (only the web-service can access the payment processing service)  Your applications should encrypt communication between systems (microservices, db)",
+            "title": "External"
+        },
+        {
+            "location": "/day-02/orchestrating-least-privilege/#mitigating-malicous-worker",
+            "text": "If a worker is comprimised, no info is available to comprimise the manager.",
+            "title": "Mitigating Malicous Worker"
+        },
+        {
+            "location": "/day-02/orchestrating-least-privilege/#mitigating-malicous-manager",
+            "text": "The workers do not  blindly  trust the manager. E.g, checking signed images to ensure they are what they're meant to be.",
+            "title": "Mitigating Malicous MAnager"
+        },
+        {
+            "location": "/day-02/orchestrating-least-privilege/#how-is-swarm-executing-least-privilege",
+            "text": "Mutual TLS by default. When you start a Swarm cluster, generates a new self-signed CA cert.  New nodes get certificates created (and rotated) and setup for free just by running Swarm.  Swarm ensures that nodes communicate over TLS always.   Secure by default.",
+            "title": "How is Swarm executing least privilege?"
+        },
+        {
+            "location": "/day-02/orchestrating-least-privilege/#how-does-swarm-does-secrets",
+            "text": "Workers only delivered the secrets they need from a manager.  Secrets are encrypted on the worker node (encrypted at rest) in a RAM disk (memory but on file system).  Works to least privilege as workers only get what they need. No secrets needed? No secrets given.  When a container is removed from a node, the secrets are removed from memory as well.",
+            "title": "How does Swarm does secrets?"
+        },
+        {
+            "location": "/day-02/docker-container-secure-right/",
+            "text": "If It's In a Container It's Secure Right?\n\n\nMany organsitions don't understand the risks that Docker presents because they think it's just like a hypervisor but more efficient.\n\n\nHow is container security different?\n\n\nTraditional model = reactive, simply because it was often difficult to replicate production environments in development.\n\n\nBut thanks to containers, we can take a proactive approach as everything out application needs to work is now available at build time (in our CI/CD system). Don't wait until it gets to prod!\n\n\nOld school\n: Nessys, AV, HIDS.\n\n\nNew school\n: AppArmor, Clair, Notary.\n\n\nOld tools scan the VM/host, we also need tools to scan the container image.\n\n\nIf a running container is just a process, we should be able to make that process act with least privilege thorugh something like App Armor.\n\n\nThe risks\n\n\n\n\nDoS the host.\n\n\nFork bomb\n\n\nKernel modification\n\n\nPrivilege escalation.\n\n\n\n\nMake sure the kernal version your running is up-to-date and not vulnerable.\n\n\nContainer runtime security\n\n\nDocker \ncomes with\n security features but they are (currently) not enaled by default.\n\n\nProtect the engine and runtime\n\n\nCIS Docker 1.13.0 Benchmark. Boring reading, but pretty important before going into production.\n\n\nSome sane defaults\n\n\n\n\nDont run \n-pid host\n or \n--net host\n.\n\n\nDon't bind your daemon to tcp://0.0.0.0:4243. (everywhere, any interface).\n\n\nUse TLS for daemon traffic (not enabled by default but there are docs to do this, not hard).\n\n\n\n\nIf you know the process(es) running, lock them down with SELinux, AppArmor or soem other tool\n\n\nHow to add security to Docker\n\n\nClair\n - Vulnerability Static Analysis for Containers\n\n\nA better pipeline\n\n\n\n\nBuild image (Dockerfile).\n\n\nScan image (Clair).\n\n\nSign image (Notary).\n\n\nPush image to image registry.\n\n\n\n\nDevs don't have to \ndo\n everything. But initiaing a conversation with securty to, for example, figure out how images will be signed is crucial. Bring security folks in early.\n\n\nDon't pull base images from external registries\n\n\nTake the Dockerfile and buid, scan, sign, push internally. \n\n\nProduction container runtime should only run signed images\n\n\nEnough said. \n\n\nBuild, deployment and running audit trail\n\n\nFor compliance, debugging and troubleshooting. Only \none\n way to do these things through a centralised CI/CD system.\n\n\nDemo\n\n\nOne flag (app-armor profile) prevented the dirtycow privilege escalation hack from working. \n\n\nLook for easy security wins and do them ASAP!\n\n\nNist Container security\n\n\nRun the most minimal OS possible to reduce surface attack area.\n\n\nEnter LinuxKit - a way to build container specific OS.\n\n\nCreates an OS in a few minutes.\n\n\n\n\nLean OS, miniaml size and boot time.\n\n\n4.9 kernel (4.10 soon).\n\n\nBatteries included (but can be replaced).\n\n\nAll system services are containers.\n\n\n\n\nAllows you to use any container runtime (e.g. just \ncontainerd\n and \nrunc\n).\n\n\nMany other companies working on this apart from Docker.\n\n\nRuns on almost anything.\n\n\nDocker is in LinuxKit, but is running in a container running with \nrunc\n. So to run an nginx docker container: runc => docker => docker run nginx.\n\n\nIt's not inception. It's just processes.\n\n\nNow allows you to ship a VM (e.g. AMI) as the artifact.\n\n\nHow is it different to a traditional OS?\n\n\n\n\nSmaller attack surface.\n\n\nImmutable infrastructure\n\n\nSandboxed system services\n\n\nSpecialised patches and config.\n\n\nFull control over build.\n\n\nYAML config.\n\n\n\n\nQuestions\n\n\nCoreOS vs LinuxKit?\n\n\nLinux Kit is great for if you're distributing a completely built immutable image to customers (e.g. Puppet Server, Couchbase).",
+            "title": "If It's In a Container It's Secure Right?"
+        },
+        {
+            "location": "/day-02/docker-container-secure-right/#if-its-in-a-container-its-secure-right",
+            "text": "Many organsitions don't understand the risks that Docker presents because they think it's just like a hypervisor but more efficient.",
+            "title": "If It's In a Container It's Secure Right?"
+        },
+        {
+            "location": "/day-02/docker-container-secure-right/#how-is-container-security-different",
+            "text": "Traditional model = reactive, simply because it was often difficult to replicate production environments in development.  But thanks to containers, we can take a proactive approach as everything out application needs to work is now available at build time (in our CI/CD system). Don't wait until it gets to prod!  Old school : Nessys, AV, HIDS.  New school : AppArmor, Clair, Notary.  Old tools scan the VM/host, we also need tools to scan the container image.  If a running container is just a process, we should be able to make that process act with least privilege thorugh something like App Armor.",
+            "title": "How is container security different?"
+        },
+        {
+            "location": "/day-02/docker-container-secure-right/#the-risks",
+            "text": "DoS the host.  Fork bomb  Kernel modification  Privilege escalation.   Make sure the kernal version your running is up-to-date and not vulnerable.",
+            "title": "The risks"
+        },
+        {
+            "location": "/day-02/docker-container-secure-right/#container-runtime-security",
+            "text": "Docker  comes with  security features but they are (currently) not enaled by default.",
+            "title": "Container runtime security"
+        },
+        {
+            "location": "/day-02/docker-container-secure-right/#protect-the-engine-and-runtime",
+            "text": "CIS Docker 1.13.0 Benchmark. Boring reading, but pretty important before going into production.",
+            "title": "Protect the engine and runtime"
+        },
+        {
+            "location": "/day-02/docker-container-secure-right/#some-sane-defaults",
+            "text": "Dont run  -pid host  or  --net host .  Don't bind your daemon to tcp://0.0.0.0:4243. (everywhere, any interface).  Use TLS for daemon traffic (not enabled by default but there are docs to do this, not hard).   If you know the process(es) running, lock them down with SELinux, AppArmor or soem other tool",
+            "title": "Some sane defaults"
+        },
+        {
+            "location": "/day-02/docker-container-secure-right/#how-to-add-security-to-docker",
+            "text": "Clair  - Vulnerability Static Analysis for Containers",
+            "title": "How to add security to Docker"
+        },
+        {
+            "location": "/day-02/docker-container-secure-right/#a-better-pipeline",
+            "text": "Build image (Dockerfile).  Scan image (Clair).  Sign image (Notary).  Push image to image registry.   Devs don't have to  do  everything. But initiaing a conversation with securty to, for example, figure out how images will be signed is crucial. Bring security folks in early.",
+            "title": "A better pipeline"
+        },
+        {
+            "location": "/day-02/docker-container-secure-right/#dont-pull-base-images-from-external-registries",
+            "text": "Take the Dockerfile and buid, scan, sign, push internally.",
+            "title": "Don't pull base images from external registries"
+        },
+        {
+            "location": "/day-02/docker-container-secure-right/#production-container-runtime-should-only-run-signed-images",
+            "text": "Enough said.",
+            "title": "Production container runtime should only run signed images"
+        },
+        {
+            "location": "/day-02/docker-container-secure-right/#build-deployment-and-running-audit-trail",
+            "text": "For compliance, debugging and troubleshooting. Only  one  way to do these things through a centralised CI/CD system.",
+            "title": "Build, deployment and running audit trail"
+        },
+        {
+            "location": "/day-02/docker-container-secure-right/#demo",
+            "text": "One flag (app-armor profile) prevented the dirtycow privilege escalation hack from working.   Look for easy security wins and do them ASAP!",
+            "title": "Demo"
+        },
+        {
+            "location": "/day-02/docker-container-secure-right/#nist-container-security",
+            "text": "Run the most minimal OS possible to reduce surface attack area.",
+            "title": "Nist Container security"
+        },
+        {
+            "location": "/day-02/docker-container-secure-right/#enter-linuxkit-a-way-to-build-container-specific-os",
+            "text": "Creates an OS in a few minutes.   Lean OS, miniaml size and boot time.  4.9 kernel (4.10 soon).  Batteries included (but can be replaced).  All system services are containers.   Allows you to use any container runtime (e.g. just  containerd  and  runc ).  Many other companies working on this apart from Docker.  Runs on almost anything.  Docker is in LinuxKit, but is running in a container running with  runc . So to run an nginx docker container: runc => docker => docker run nginx.  It's not inception. It's just processes.  Now allows you to ship a VM (e.g. AMI) as the artifact.",
+            "title": "Enter LinuxKit - a way to build container specific OS."
+        },
+        {
+            "location": "/day-02/docker-container-secure-right/#how-is-it-different-to-a-traditional-os",
+            "text": "Smaller attack surface.  Immutable infrastructure  Sandboxed system services  Specialised patches and config.  Full control over build.  YAML config.",
+            "title": "How is it different to a traditional OS?"
+        },
+        {
+            "location": "/day-02/docker-container-secure-right/#questions",
+            "text": "",
+            "title": "Questions"
+        },
+        {
+            "location": "/day-02/docker-container-secure-right/#coreos-vs-linuxkit",
+            "text": "Linux Kit is great for if you're distributing a completely built immutable image to customers (e.g. Puppet Server, Couchbase).",
+            "title": "CoreOS vs LinuxKit?"
+        },
+        {
+            "location": "/day-02/distributed-command-cog/",
+            "text": "Distributed Command Execution using Containers and Cog\n\n\nVincent De Smet - Docker Captain\n\n\n@vincentdesmet\n\n\nOverview of Operable Cog (a ChatOps bot) and how it uses containers and Docker hosts to execute command across a distributed set of servers.\n\n\nNote\n: I need to learn more about ChatOps?\n\n\nChat-ops\n\n\n\n\nConvenient.\n\n\nTransparent.\n\n\nSharable.\n\n\nRepeatable.\n\n\nAuditable (recorded).\n\n\n\n\nBut seems risky! Needs to take security into account.\n\n\nCog bundle wharehouse\n\n\nCog allows you to combine tools to solve complex problems.\n\n\nDistributed command execution\n\n\nArchitecture\n\n\n\n\nCog nice features\n\n\nAliases.\n\n\nBundles\n\n\n\n\nRoute 53 for CNAME creation.\n\n\nautoscaling.\n\n\ncloudformation (Kick Starter).\n\n\nGitLab Cog has several bundles.\n\n\n\n\nSlack setup\n\n\nSetup channels for diferent environments.\n\n\nChatOps\n\n\n\n\nAbstract management commands to a higher level. \n\n\nDon't use \nkubectl\n but instead \norchestrator\n. What the orchestration tool is shouldn't matter.\n\n\nA custom DSL also provides protection and isolation from people wanting to do bad/wrong things accidentally.\n\n\nHow to enable/disable/report/log commands?\n\n\nWhat are other companies doing to make what commands people are running more transparent? Do we really need ChatOps for that?\n\n\n\n\nCool LInks\n\n\n\n\nConvDev - GitLab Roadmap",
+            "title": "Distributed Command Execution using Containers and Cog"
+        },
+        {
+            "location": "/day-02/distributed-command-cog/#distributed-command-execution-using-containers-and-cog",
+            "text": "Vincent De Smet - Docker Captain  @vincentdesmet  Overview of Operable Cog (a ChatOps bot) and how it uses containers and Docker hosts to execute command across a distributed set of servers.  Note : I need to learn more about ChatOps?",
+            "title": "Distributed Command Execution using Containers and Cog"
+        },
+        {
+            "location": "/day-02/distributed-command-cog/#chat-ops",
+            "text": "Convenient.  Transparent.  Sharable.  Repeatable.  Auditable (recorded).   But seems risky! Needs to take security into account.  Cog bundle wharehouse  Cog allows you to combine tools to solve complex problems.  Distributed command execution",
+            "title": "Chat-ops"
+        },
+        {
+            "location": "/day-02/distributed-command-cog/#architecture",
+            "text": "",
+            "title": "Architecture"
+        },
+        {
+            "location": "/day-02/distributed-command-cog/#cog-nice-features",
+            "text": "Aliases.",
+            "title": "Cog nice features"
+        },
+        {
+            "location": "/day-02/distributed-command-cog/#bundles",
+            "text": "Route 53 for CNAME creation.  autoscaling.  cloudformation (Kick Starter).  GitLab Cog has several bundles.",
+            "title": "Bundles"
+        },
+        {
+            "location": "/day-02/distributed-command-cog/#slack-setup",
+            "text": "Setup channels for diferent environments.",
+            "title": "Slack setup"
+        },
+        {
+            "location": "/day-02/distributed-command-cog/#chatops",
+            "text": "Abstract management commands to a higher level.   Don't use  kubectl  but instead  orchestrator . What the orchestration tool is shouldn't matter.  A custom DSL also provides protection and isolation from people wanting to do bad/wrong things accidentally.  How to enable/disable/report/log commands?  What are other companies doing to make what commands people are running more transparent? Do we really need ChatOps for that?",
+            "title": "ChatOps"
+        },
+        {
+            "location": "/day-02/distributed-command-cog/#cool-links",
+            "text": "ConvDev - GitLab Roadmap",
+            "title": "Cool LInks"
+        },
+        {
+            "location": "/day-02/mixing-cgroups-1-2/",
+            "text": "Mixing cgroupfs v1 and cgroupfs v2: finding solutions for container runtimes\n\n\nChristian Brauner - Canonical\n\n\nbrau_ner\n\n\nNote\n\n\nAll of this talk went over my head.\n The notes I've taken are probably inaccurate, wrong or at least severely lacking detail.\n\n\nBut I loved that we had a presentation from someone with such deep knowledge of the Linux kernel present.\n\n\nCgroups\n\n\n\n\nPseudo kernal filesystem following the vfs\n\n\ncolllection of processes\n\n\nresource management and tracking (e.g. CPU, memory, disk I/O, network, etc).\n\n\n\n\ncroups can also do things like only allow this process to use processes 1-2.\n\n\ncgroup v1\n\n\nls -al /sys/fs/cgroup\n.\n\n\nAll current container runtimes use cgroup v1.\n\n\ncgroup v2\n\n\nThere can only be one heirarchy, distributed top down.\n\n\nDid not really understand anything else beyond this point...\n\n\nWhat does this mean for runc\n\n\nEverything is fine for now, as long as your not using a vgroup v2 hiearachy or a hybrid hierarchy.\n\n\nTo make sure runc is not broken for you in the future\n\n\nWarning: This has not been tested and verified by me yet\n.\n\n\nChange \nGRUB_CMDLINE_LINUX_DEFAULT\n in \n/etc/default/grub\n so that it looks like this:\n\n\nGRUB_CMDLINE_LINUX_DEFAULT=\"quiet systemd.legacy_systemd_cgroup_controller=yes\"\n\n\n\nCredit: https://github.com/moby/moby/issues/28109#issuecomment-259122113",
+            "title": "Mixing cgroupfs v1 and cgroupfs v2 - finding solutions for container runtimes"
+        },
+        {
+            "location": "/day-02/mixing-cgroups-1-2/#mixing-cgroupfs-v1-and-cgroupfs-v2-finding-solutions-for-container-runtimes",
+            "text": "Christian Brauner - Canonical  brau_ner",
+            "title": "Mixing cgroupfs v1 and cgroupfs v2: finding solutions for container runtimes"
+        },
+        {
+            "location": "/day-02/mixing-cgroups-1-2/#note",
+            "text": "All of this talk went over my head.  The notes I've taken are probably inaccurate, wrong or at least severely lacking detail.  But I loved that we had a presentation from someone with such deep knowledge of the Linux kernel present.",
+            "title": "Note"
+        },
+        {
+            "location": "/day-02/mixing-cgroups-1-2/#cgroups",
+            "text": "Pseudo kernal filesystem following the vfs  colllection of processes  resource management and tracking (e.g. CPU, memory, disk I/O, network, etc).   croups can also do things like only allow this process to use processes 1-2.",
+            "title": "Cgroups"
+        },
+        {
+            "location": "/day-02/mixing-cgroups-1-2/#cgroup-v1",
+            "text": "ls -al /sys/fs/cgroup .  All current container runtimes use cgroup v1.",
+            "title": "cgroup v1"
+        },
+        {
+            "location": "/day-02/mixing-cgroups-1-2/#cgroup-v2",
+            "text": "There can only be one heirarchy, distributed top down.  Did not really understand anything else beyond this point...",
+            "title": "cgroup v2"
+        },
+        {
+            "location": "/day-02/mixing-cgroups-1-2/#what-does-this-mean-for-runc",
+            "text": "Everything is fine for now, as long as your not using a vgroup v2 hiearachy or a hybrid hierarchy.",
+            "title": "What does this mean for runc"
+        },
+        {
+            "location": "/day-02/mixing-cgroups-1-2/#to-make-sure-runc-is-not-broken-for-you-in-the-future",
+            "text": "Warning: This has not been tested and verified by me yet .  Change  GRUB_CMDLINE_LINUX_DEFAULT  in  /etc/default/grub  so that it looks like this:  GRUB_CMDLINE_LINUX_DEFAULT=\"quiet systemd.legacy_systemd_cgroup_controller=yes\"  Credit: https://github.com/moby/moby/issues/28109#issuecomment-259122113",
+            "title": "To make sure runc is not broken for you in the future"
+        },
+        {
+            "location": "/day-02/rootless-containers-runc/",
+            "text": "Rootless Containers with runC\n\n\nAleksa Sarai - SUSE\n\n\n@lordcyphar\n\n\nOverview\n\n\nEssentially all popular container runtimes require some form of root privileges in order to create and manage containers. This becomes a problem for certain systems, where administrators are hesitant to install any software, let alone a container runtime -- many of which allow for privileged containers without authentication.\n\n\nContainers are mostly makde of Linux kernel namespaces.\n\n\nWe want isolation but want it without privileges.\n\n\nThe key kernel feature is USER namespaces \ndocs\n\n\nNote\n: Most of this talk went over my head too so, hence the lack of notes. Cool stuff though!\n\n\nRunc Updates\n\n\nRecently, runc got support for rootless containers but not everything works. \nMore info\n.\n\n\nGithub merge\n.\n\n\nTools\n\n\nskoeo - Download and convert images from various sources and registries.\numoci: Unpack, repack and otherwise modify local OCI images.\n\n\nSummary\n\n\nSuse is doing some really cool stuff to not only run containers withot root privileges, but also building containers without them as well.\n\n\nCool Links\n\n\n\n\nhttps://rootlesscontaine.rs/\n\n\nhttps://build.opensuse.org/\n\n\nhttps://doc.opensuse.org/projects/kiwi/doc/",
+            "title": "Rootless Containers with runC"
+        },
+        {
+            "location": "/day-02/rootless-containers-runc/#rootless-containers-with-runc",
+            "text": "Aleksa Sarai - SUSE  @lordcyphar",
+            "title": "Rootless Containers with runC"
+        },
+        {
+            "location": "/day-02/rootless-containers-runc/#overview",
+            "text": "Essentially all popular container runtimes require some form of root privileges in order to create and manage containers. This becomes a problem for certain systems, where administrators are hesitant to install any software, let alone a container runtime -- many of which allow for privileged containers without authentication.  Containers are mostly makde of Linux kernel namespaces.  We want isolation but want it without privileges.  The key kernel feature is USER namespaces  docs  Note : Most of this talk went over my head too so, hence the lack of notes. Cool stuff though!",
+            "title": "Overview"
+        },
+        {
+            "location": "/day-02/rootless-containers-runc/#runc-updates",
+            "text": "Recently, runc got support for rootless containers but not everything works.  More info .  Github merge .",
+            "title": "Runc Updates"
+        },
+        {
+            "location": "/day-02/rootless-containers-runc/#tools",
+            "text": "skoeo - Download and convert images from various sources and registries.\numoci: Unpack, repack and otherwise modify local OCI images.",
+            "title": "Tools"
+        },
+        {
+            "location": "/day-02/rootless-containers-runc/#summary",
+            "text": "Suse is doing some really cool stuff to not only run containers withot root privileges, but also building containers without them as well.",
+            "title": "Summary"
+        },
+        {
+            "location": "/day-02/rootless-containers-runc/#cool-links",
+            "text": "https://rootlesscontaine.rs/  https://build.opensuse.org/  https://doc.opensuse.org/projects/kiwi/doc/",
+            "title": "Cool Links"
+        },
+        {
+            "location": "/day-02/kubernetes-next-gen-data-centre/",
+            "text": "Kubernetes and the next generation data centre\n\n\nJames Buckett - Levvel.io\n@jamesbuckett\n\n\nFederation is a cluster of clusters.\n\n\nKubernetes Federation\n\n\nWarning\n\n\nKubernetes Federation is v1beta1.\n\n\nWhy?\n\n\n\n\nFreedom\n: Move the worksloads where you want (region or cloud provider).\n\n\nFinance\n: Ability to shift workloads for reduced cost.\n\n\nFailure\n: High availability.\n\n\nFlare\n: Cloud burst. Quickly scale up.\n\n\n\n\nWhat\n\n\n\n\nEnables multi-grographical locations (region)\n\n\nEnables multi-vendor.\n\n\nEnable on-premises and cloud.\n\n\n\n\nWanting a native Kubernetes installation so all he has to worry about is the applications.\n\n\nBuilding a federated clouser\n\n\n\n\nCreate a DNS managed zone.\n\n\nProvision the fenderated API server.\n\n\nProvision the federated controller manager.\n\n\nAdding clusters to the federation.\n\n\n\n\nFederation control plane\n\n\n\n\nfederation-apiserver.\n\n\nfederation-controller-manager.\n\n\nno scheduler yet (manual step to move workloads between clusters).\n\n\netcd.\n\n\n\n\nDemo",
+            "title": "Kubernetes and the Next Generation Data Centre"
+        },
+        {
+            "location": "/day-02/kubernetes-next-gen-data-centre/#kubernetes-and-the-next-generation-data-centre",
+            "text": "James Buckett - Levvel.io\n@jamesbuckett  Federation is a cluster of clusters.  Kubernetes Federation",
+            "title": "Kubernetes and the next generation data centre"
+        },
+        {
+            "location": "/day-02/kubernetes-next-gen-data-centre/#warning",
+            "text": "Kubernetes Federation is v1beta1.",
+            "title": "Warning"
+        },
+        {
+            "location": "/day-02/kubernetes-next-gen-data-centre/#why",
+            "text": "Freedom : Move the worksloads where you want (region or cloud provider).  Finance : Ability to shift workloads for reduced cost.  Failure : High availability.  Flare : Cloud burst. Quickly scale up.",
+            "title": "Why?"
+        },
+        {
+            "location": "/day-02/kubernetes-next-gen-data-centre/#what",
+            "text": "Enables multi-grographical locations (region)  Enables multi-vendor.  Enable on-premises and cloud.   Wanting a native Kubernetes installation so all he has to worry about is the applications.",
+            "title": "What"
+        },
+        {
+            "location": "/day-02/kubernetes-next-gen-data-centre/#building-a-federated-clouser",
+            "text": "Create a DNS managed zone.  Provision the fenderated API server.  Provision the federated controller manager.  Adding clusters to the federation.",
+            "title": "Building a federated clouser"
+        },
+        {
+            "location": "/day-02/kubernetes-next-gen-data-centre/#federation-control-plane",
+            "text": "federation-apiserver.  federation-controller-manager.  no scheduler yet (manual step to move workloads between clusters).  etcd.",
+            "title": "Federation control plane"
+        },
+        {
+            "location": "/day-02/kubernetes-next-gen-data-centre/#demo",
+            "text": "",
+            "title": "Demo"
+        },
+        {
+            "location": "/cool-links/",
+            "text": "Cool links\n\n\nIn no particular order. Proably heaps of cool stuff missing.\n\n\n\n\nhttps://www.keyboardmaestro.com/main/\n\n\nhttps://www.tecmint.com/record-and-replay-linux-terminal-session-commands-using-script/\nhttps://coelhorjc.wordpress.com/2015/04/30/people-got-oo-all-wrong-its-not-about-classes-or-objects-the-big-idea-is-messaging-from-allen-kay/\n\n\nhttps://www.google.com.au/search?client=safari&rls=en&q=ttyrec&ie=UTF-8&oe=UTF-8&gfe_rd=cr&ei=IqEjWc7wGfHDXqaTvZgN\n\n\nhttps://www.google.com.au/search?client=safari&rls=en&q=what+is+/proc+linux&ie=UTF-8&oe=UTF-8&gfe_rd=cr&ei=utwjWcz_N-7DXp7zk_AN\n\n\nhttps://github.com/philpep/testinfra\n\n\nhttps://medium.com/@frntn/not-your-grandmother-s-docker-environment-c3c5c1a5aab\n\n\nhttps://www.google.com.au/search?client=safari&rls=en&q=minio&ie=UTF-8&oe=UTF-8&gfe_rd=cr&ei=drojWauLA8vN8gfXkojYBA\n\n\nhttps://www.linux.com/blog/get-trained-and-certified-kubernetes-linux-foundation-and-cncf\n\n\nhttps://www.cncf.io\n\n\nhttps://training.linuxfoundation.org/linux-courses/system-administration-training/kubernetes-fundamentals\n\n\nhttps://bitnami.com\n\n\nhttp://docs.heptio.com/content/tutorials/aws-qs-helm-wordpress.html\n\n\nhttp://www.duarte.com/blog/audience-engagement-strategies-presentations/\n\n\nhttps://gist.github.com/so0k/f927a4b60003cedd101a0911757c605a & https://github.com/kubernetes/charts/issues/44\n\n\nhttp://blog.alexellis.io/follow-all-captains/\n\n\nhttps://www.docker.com/docker-community\n\n\nhttps://github.com/docker/community",
+            "title": "Cool Links"
+        },
+        {
+            "location": "/cool-links/#cool-links",
+            "text": "In no particular order. Proably heaps of cool stuff missing.   https://www.keyboardmaestro.com/main/  https://www.tecmint.com/record-and-replay-linux-terminal-session-commands-using-script/\nhttps://coelhorjc.wordpress.com/2015/04/30/people-got-oo-all-wrong-its-not-about-classes-or-objects-the-big-idea-is-messaging-from-allen-kay/  https://www.google.com.au/search?client=safari&rls=en&q=ttyrec&ie=UTF-8&oe=UTF-8&gfe_rd=cr&ei=IqEjWc7wGfHDXqaTvZgN  https://www.google.com.au/search?client=safari&rls=en&q=what+is+/proc+linux&ie=UTF-8&oe=UTF-8&gfe_rd=cr&ei=utwjWcz_N-7DXp7zk_AN  https://github.com/philpep/testinfra  https://medium.com/@frntn/not-your-grandmother-s-docker-environment-c3c5c1a5aab  https://www.google.com.au/search?client=safari&rls=en&q=minio&ie=UTF-8&oe=UTF-8&gfe_rd=cr&ei=drojWauLA8vN8gfXkojYBA  https://www.linux.com/blog/get-trained-and-certified-kubernetes-linux-foundation-and-cncf  https://www.cncf.io  https://training.linuxfoundation.org/linux-courses/system-administration-training/kubernetes-fundamentals  https://bitnami.com  http://docs.heptio.com/content/tutorials/aws-qs-helm-wordpress.html  http://www.duarte.com/blog/audience-engagement-strategies-presentations/  https://gist.github.com/so0k/f927a4b60003cedd101a0911757c605a & https://github.com/kubernetes/charts/issues/44  http://blog.alexellis.io/follow-all-captains/  https://www.docker.com/docker-community  https://github.com/docker/community",
+            "title": "Cool links"
+        }
+    ]
+}
