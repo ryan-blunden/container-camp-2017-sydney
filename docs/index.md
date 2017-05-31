@@ -15,3 +15,8 @@ Hopefully you find these notes useful!
 Take a look at the [Container Camp 2017 conference schedule](https://2017.container.camp/au/schedule/) as I did not take notes for all sessions.
 
 The conference oraganisers will also be publishing all [videos on their YouTube account](https://www.youtube.com/channel/UCvksXSnLqIVM_uFB7xyrsSg).
+
+
+## Summary
+
+<iframe src="//www.slideshare.net/slideshow/embed_code/key/feq4men4e1n3r" width="595" height="485" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe> <div style="margin-bottom:5px"> <strong> <a href="//www.slideshare.net/ryan_blunden/container-camp-sydney-2017-summary" title="Container Camp Sydney 2017 Summary" target="_blank">Container Camp Sydney 2017 Summary</a> </strong> from <strong><a target="_blank" href="https://www.slideshare.net/ryan_blunden">Ryan Blunden</a></strong> </div>
